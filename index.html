@@ -1,268 +1,72 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>SchoolSims Sales Tools</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>College Guides — Application Timeline, Financial Aid & Campus Visits | searchcolleges.ai</title>
+<meta name="description" content="Free, practical guides for the college search: month-by-month application timelines, understanding financial aid and net price, and getting the most out of campus visits.">
+<link rel="canonical" href="https://www.searchcolleges.ai/guides/index.html">
 <style>
-/* Layout: brand bar -> short intro -> three tool cards in a row (stack on phones). */
-:root{
-  --bg:#F4F4F9; --surface:#FFFFFF; --sunk:#EBEBF3; --fg:#1B1A3A; --muted:#5D5C7A; --line:#DCDBE8;
-  --primary:#2D2B6F; --on-primary:#FFFFFF; --maroon:#9F354F; --maroon-soft:#F6E5EA;
-  --peri:#5E7FCC; --peri-soft:#E5EBFA;
-  --good:#1D7349; --good-soft:#E1F2E8; --warn:#8F5B00; --warn-soft:#FAEFD8;
-  --shadow:0 1px 2px rgba(27,26,58,.06),0 4px 16px rgba(27,26,58,.06);
-  --f-display:"Bricolage Grotesque","Figtree",system-ui,sans-serif;
-  --f-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#111027; --surface:#1A1936; --sunk:#232244; --fg:#ECEBF7; --muted:#A4A3C4; --line:#33325A;
-  --primary:#A9A7F2; --on-primary:#15142E; --maroon:#E48AA0; --maroon-soft:#3A1F2B;
-  --peri:#9DB6EF; --peri-soft:#222C4C; --good:#7FD3A6; --good-soft:#173628; --warn:#F0C06A; --warn-soft:#3A2E14;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25); color-scheme:dark }}
-:root[data-theme="dark"]{
-  --bg:#111027; --surface:#1A1936; --sunk:#232244; --fg:#ECEBF7; --muted:#A4A3C4; --line:#33325A;
-  --primary:#A9A7F2; --on-primary:#15142E; --maroon:#E48AA0; --maroon-soft:#3A1F2B;
-  --peri:#9DB6EF; --peri-soft:#222C4C; --good:#7FD3A6; --good-soft:#173628; --warn:#F0C06A; --warn-soft:#3A2E14;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.25); color-scheme:dark }
-*{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font:15px/1.5 var(--f-body)}
-.wrap{max-width:1240px;margin:0 auto;padding-inline:16px;padding-block:0 64px}
-h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.01em}
-h2{font-size:20px;font-weight:700} h3{font-size:16px;font-weight:700}
-p{margin:0}
-.muted{color:var(--muted)}
-.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
-.label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-button,input,select,textarea{font:inherit;color:inherit}
-button{cursor:pointer}
-:focus-visible{outline:2px solid var(--peri);outline-offset:2px}
-.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 12px;font-weight:600;font-size:14px}
-.btn:hover{border-color:var(--peri)}
-.btn.primary{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
-.btn.maroon{background:var(--maroon);color:var(--on-primary);border-color:var(--maroon)}
-.btn.sm{padding:4px 9px;font-size:13px}
-.btn[disabled]{opacity:.55;cursor:default}
-.pill{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:600;white-space:nowrap}
-.p-k12{background:var(--peri-soft);color:var(--peri)} .p-higher{background:var(--maroon-soft);color:var(--maroon)}
-.p-indep{background:var(--good-soft);color:var(--good)} .p-cte{background:var(--warn-soft);color:var(--warn)} .p-other{background:var(--sunk);color:var(--muted)}
-.t1{background:var(--primary);color:var(--on-primary)} .t2{background:var(--peri-soft);color:var(--peri)} .t3{background:var(--sunk);color:var(--muted)}
-.mined{background:var(--warn-soft);color:var(--warn)}
+  :root{--navy:#1E3A5F;--ink:#2B3440;--muted:#5C6B7A;--paper:#FAF9F6;--rule:#E3E0D8;--accent:#B8860B;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--paper);color:var(--ink);line-height:1.7;font-size:17px}
+  header{background:var(--navy);padding:18px 24px}
+  header a{color:#fff;text-decoration:none;font-family:-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;font-weight:700;font-size:18px;letter-spacing:.2px}
+  nav{background:var(--navy);padding:0 24px 14px}
+  nav a{color:#CBD8E8;text-decoration:none;font-family:-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;font-size:14px;margin-right:18px}
+  nav a:hover{color:#fff;text-decoration:underline}
+  main{max-width:760px;margin:0 auto;padding:48px 24px 72px}
+  h1{font-size:34px;color:var(--navy);line-height:1.2;margin-bottom:12px}
+  .lede{color:var(--muted);margin-bottom:36px;font-size:18px}
+  .guide{background:#fff;border:1px solid var(--rule);border-radius:8px;padding:26px;margin-bottom:20px}
+  .guide .kicker{font-family:-apple-system,'Segoe UI',sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:1.2px;color:var(--accent);font-weight:700;margin-bottom:8px}
+  .guide h2{font-size:22px;line-height:1.3;margin-bottom:10px}
+  .guide h2 a{color:var(--navy);text-decoration:none}
+  .guide h2 a:hover{text-decoration:underline}
+  .guide p{margin-bottom:12px}
+  .guide .read{font-family:-apple-system,'Segoe UI',sans-serif;font-size:14px;font-weight:600}
+  a{color:var(--navy)}
+  footer{border-top:1px solid var(--rule);margin-top:24px;padding:28px 24px;text-align:center;font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;color:var(--muted)}
+  footer a{color:var(--navy);text-decoration:none;margin:0 10px}
+</style>
+</head>
+<body>
+<header><a href="/">🎓 College Fit Finder</a></header>
+<nav>
+  <a href="/">Home</a>
+  <a href="/guides/index.html">College Guides</a>
+  <a href="/about.html">About</a>
+  <a href="/contact.html">Contact</a>
+  <a href="/privacy.html">Privacy</a>
+</nav>
+<main>
+  <h1>College Guides</h1>
+  <p class="lede">Practical, no-fluff guides for students and families navigating the college search — written to answer the questions counselors hear most often.</p>
 
-/* brand bar */
-.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
-.bar .wrap{display:flex;align-items:center;gap:12px;padding-block:10px;flex-wrap:wrap}
-.mark{display:flex;align-items:center;gap:10px;margin-right:auto}
-.dot{width:30px;height:30px;border-radius:50%;background:var(--maroon);display:grid;place-items:center;color:#fff;font-family:var(--f-display);font-weight:700;font-size:15px}
-.mark b{font-family:var(--f-display);font-size:18px}
-.mark span{color:var(--muted);font-size:13px;display:block;line-height:1.1}
+  <div class="guide">
+    <div class="kicker">Planning</div>
+    <h2><a href="/guides/college-application-timeline.html">The College Application Timeline: What to Do Junior and Senior Year, Month by Month</a></h2>
+    <p>A realistic month-by-month roadmap from junior fall through senior spring — when to test, when to visit, when to ask for recommendations, and which deadlines actually matter.</p>
+    <a class="read" href="/guides/college-application-timeline.html">Read the guide →</a>
+  </div>
 
-/* setup */
-.band{display:grid;gap:14px;margin-top:18px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow);min-width:0}
-details.card>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-details.card>summary::-webkit-details-marker{display:none}
-details.card>summary .chev{margin-left:auto;transition:transform .15s}
-details[open].card>summary .chev{transform:rotate(90deg)}
-.prompts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-top:12px}
-.prompt{background:var(--sunk);border-radius:10px;padding:12px;display:grid;gap:8px;min-width:0}
-.prompt pre{margin:0;white-space:pre-wrap;font:12.5px/1.55 var(--f-mono);max-height:220px;overflow:auto}
-.prompt .hd{display:flex;align-items:center;gap:8px}
-.prompt .hd .btn{margin-left:auto}
-.uploads{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-.drop{border:1.5px dashed var(--line);border-radius:12px;padding:14px;display:grid;gap:6px;background:var(--surface);cursor:pointer;min-width:0}
-.drop.over{border-color:var(--peri);background:var(--peri-soft)}
-.drop.loaded{border-style:solid}
-.drop .top{display:flex;align-items:center;gap:8px}
-.drop input{display:none}
-.drop .stat{font-size:13px}
-.banner{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--warn-soft);color:var(--warn);border-radius:10px;padding:9px 12px;font-size:14px;font-weight:500}
-.settings{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:12px}
-.field{display:grid;gap:4px;min-width:0}
-.field input,.field select{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 9px;width:100%}
-.check{display:flex;gap:8px;align-items:center;font-size:14px}
+  <div class="guide">
+    <div class="kicker">Paying for College</div>
+    <h2><a href="/guides/financial-aid-explained.html">Financial Aid, Explained: FAFSA, Net Price, and Why Sticker Price Is Almost Meaningless</a></h2>
+    <p>How need-based aid, merit scholarships, and net price calculators actually work — and how to compare offers so a $65,000 school and a $30,000 school can be judged fairly.</p>
+    <a class="read" href="/guides/financial-aid-explained.html">Read the guide →</a>
+  </div>
 
-/* summary strip */
-.strip{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:baseline;margin-top:20px}
-.strip .n{font-family:var(--f-display);font-size:26px;font-weight:700}
-.strip .k{color:var(--muted);font-size:13px;margin-left:4px}
-
-/* tabs */
-.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-top:16px;overflow-x:auto}
-.tab{background:none;border:0;border-bottom:2.5px solid transparent;padding:10px 12px;font-weight:600;color:var(--muted);white-space:nowrap}
-.tab[aria-selected="true"]{color:var(--fg);border-color:var(--maroon)}
-.panel{margin-top:16px}
-
-/* days */
-.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
-.day{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 14px;text-align:left;min-width:96px}
-.day b{display:block;font-family:var(--f-display);font-size:16px}
-.day span{font-size:12px;color:var(--muted)}
-.day[aria-pressed="true"]{background:var(--primary);border-color:var(--primary);color:var(--on-primary)}
-.day[aria-pressed="true"] span{color:inherit;opacity:.8}
-.daygrid{display:grid;grid-template-columns:320px 1fr;gap:16px;margin-top:14px;align-items:start}
-@media (max-width:880px){.daygrid{grid-template-columns:1fr}}
-
-/* timeline */
-.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 70px)}
-@media (max-width:880px){.rail{position:static}}
-.tl{display:grid;gap:0;margin-top:10px;max-height:70vh;overflow:auto}
-.ev{display:grid;grid-template-columns:64px 1fr;gap:10px;padding:7px 0;border-top:1px solid var(--line);font-size:13.5px}
-.ev:first-child{border-top:0}
-.ev .t{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);padding-top:1px}
-.ev .w{min-width:0}
-.ev .w b{font-weight:600}
-.ev.blk{background:var(--sunk);border-radius:8px;padding:8px;border-top:0;margin:6px 0}
-.ev.blk .t{color:var(--fg)}
-.step{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-right:6px}
-.s-c1{color:var(--peri)} .s-c2{color:var(--maroon)} .s-em{color:var(--good)} .s-pr{color:var(--muted)}
-
-/* account cards */
-.accts{display:grid;gap:14px}
-.acct .head{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
-.acct .head .nm{min-width:0;flex:1}
-.score{font-family:var(--f-display);font-weight:700;font-size:22px;line-height:1;text-align:right}
-.score small{display:block;font:600 10px/1.4 var(--f-body);letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
-.why{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.why span{font-size:12px;background:var(--sunk);border-radius:6px;padding:2px 7px;color:var(--muted)}
-.clist{display:grid;gap:0;margin-top:12px;border-top:1px solid var(--line)}
-.crow{display:grid;grid-template-columns:1fr auto;gap:8px 12px;padding:10px 0;border-bottom:1px solid var(--line);align-items:center;cursor:pointer}
-.crow:hover .cn{color:var(--peri)}
-.crow:last-child{border-bottom:0}
-.cn{font-weight:600}
-.cmeta{font-size:13px;color:var(--muted);min-width:0;overflow-wrap:anywhere}
-.ctimes{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;font-size:12px}
-.ctimes .mono{background:var(--sunk);border-radius:6px;padding:2px 6px}
-.acct .apps{margin-top:30px}
-.apps h2{font-size:17px;margin-bottom:10px}
-.applist{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px}
-.app{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:11px 12px;text-decoration:none;color:var(--fg);min-width:0}
-.app:hover{border-color:var(--peri)}
-.app svg{width:22px;height:22px;flex:none;color:var(--peri)}
-.app b{display:block;font-size:14.5px}
-.app span{display:block;font-size:12.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.app>div{min-width:0}
-.foot{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-.slot{border:1.5px dashed var(--line);border-radius:8px;padding:8px 10px;margin-top:8px;font-size:13px;color:var(--muted)}
-
-/* tables */
-.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
-table{border-collapse:collapse;width:100%;font-size:13.5px}
-th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
-th{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);background:var(--sunk);position:sticky;top:0}
-td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
-tr:last-child td{border-bottom:0}
-
-/* drawer */
-.scrim{position:fixed;inset:0;background:rgba(10,10,30,.45);z-index:40;display:flex;justify-content:flex-end}
-.drawer{background:var(--bg);width:min(620px,100%);height:100%;overflow:auto;padding:18px 16px calc(24px + env(safe-area-inset-bottom,0px));padding-top:calc(18px + env(safe-area-inset-top,0px))}
-.drawer .dh{display:flex;gap:10px;align-items:flex-start}
-.drawer .dh>div{flex:1;min-width:0}
-.seg{display:flex;gap:4px;background:var(--sunk);border-radius:9px;padding:3px;margin-top:14px}
-.seg button{flex:1;border:0;background:none;border-radius:7px;padding:7px;font-weight:600;color:var(--muted)}
-.seg button[aria-pressed="true"]{background:var(--surface);color:var(--fg);box-shadow:var(--shadow)}
-.doc{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:12px}
-.doc pre{margin:0;white-space:pre-wrap;font:14px/1.6 var(--f-body)}
-.doc .dhd{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.doc .dhd .btn{margin-left:auto}
-.facts{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13.5px;margin-top:12px}
-.facts dt{color:var(--muted)} .facts dd{margin:0;min-width:0;overflow-wrap:anywhere}
-
-/* finder */
-.engine{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
-.engine .txt{flex:1;min-width:240px;display:grid;gap:4px}
-.prog{height:6px;background:var(--sunk);border-radius:99px;overflow:hidden;margin-top:10px}
-.prog i{display:block;height:100%;background:var(--maroon);width:0;transition:width .3s}
-.found{display:grid;gap:10px;margin-top:14px}
-.frow{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:10px 0;border-top:1px solid var(--line)}
-.frow a{color:var(--peri);font-size:13px;overflow-wrap:anywhere}
-
-/* stepper + steps */
-.stepper{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:18px}
-.stp{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 10px;text-align:left;font-weight:600;font-size:14px;min-width:0}
-.stp i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--sunk);color:var(--muted);font:700 13px/1 var(--f-display);flex:none}
-.stp span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.stp[aria-current="step"]{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}
-.stp[aria-current="step"] i{background:var(--maroon);color:#fff}
-.stp.done i{background:var(--good-soft);color:var(--good)}
-@media (max-width:640px){.stp span{display:none}.stp{justify-content:center}}
-.stepview{margin-top:16px}
-.shd{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:6px}
-.next{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
-.calc{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:18px;margin-top:14px;align-items:start}
-@media (max-width:880px){.calc{grid-template-columns:1fr}}
-.inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
-.inputs .full{grid-column:1/-1}
-.months{display:flex;flex-wrap:wrap;gap:6px}
-.months button{border:1px solid var(--line);background:var(--surface);border-radius:7px;padding:4px 9px;font-size:13px;font-weight:600;color:var(--muted)}
-.months button[aria-pressed="true"]{background:var(--maroon-soft);color:var(--maroon);border-color:var(--maroon)}
-.result{background:var(--sunk);border-radius:12px;padding:16px;display:grid;gap:12px}
-.big{font:700 52px/1 var(--f-display);color:var(--maroon);font-variant-numeric:tabular-nums}
-.chain{display:grid;gap:0;font-size:14px}
-.chain div{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-top:1px solid var(--line)}
-.chain div:first-child{border-top:0}
-.chain b{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
-.warnbox{background:var(--warn-soft);color:var(--warn);border-radius:8px;padding:8px 10px;font-size:13.5px}
-.okbox{background:var(--good-soft);color:var(--good);border-radius:8px;padding:8px 10px;font-size:13.5px}
-.bar-cell{display:flex;align-items:center;gap:8px;min-width:140px}
-.bar-cell i{display:block;height:8px;border-radius:4px;background:var(--peri)}
-.bar-cell i.hot{background:var(--maroon)}
-tr.low td{color:var(--muted)}
-.revtools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0}
-.revtools input{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 10px;flex:1;min-width:200px}
-.seg.sm{margin-top:0}
-.seg.sm button{padding:5px 12px;font-size:13px}
-td select{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:4px 6px;font-size:13px;max-width:190px}
-tr.ex td{opacity:.55}
-tr.ex td:first-child,tr.ex td:last-child{opacity:1}
-.welcome{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:18px;margin-top:18px;align-items:start}
-.welcome h1{font-size:26px;margin:4px 0 6px}
-.welcome ol{margin:0;padding-left:20px;display:grid;gap:6px;font-size:14px}
-@media (max-width:760px){.welcome{grid-template-columns:1fr}}
-.tip{background:var(--warn-soft);color:var(--fg);border-radius:8px;padding:9px 11px;font-size:13px;line-height:1.5}
-.tip b{color:var(--warn)}
-.settings .check{justify-content:flex-start;text-align:left}
-.check input{width:auto!important;flex:none}
-.drop.big{justify-items:center;text-align:center;padding:26px 16px;border-width:2px;gap:8px}
-.drop.big .top{justify-content:center;flex-wrap:wrap}
-.drop.big .pick{pointer-events:none;margin-top:4px}
-.upico{width:34px;height:34px;color:var(--peri)}
-.howto{margin:10px 0 0;padding-left:20px;display:grid;gap:10px;font-size:14.5px;max-width:80ch}
-.urlrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
-.urlrow code,.howto code{font:12.5px var(--f-mono);background:var(--sunk);border-radius:6px;padding:4px 7px;overflow-wrap:anywhere;min-width:0}
-.urlrow code{flex:1 1 260px}
-.gapgrid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:14px;margin-top:12px}
-@media (max-width:700px){.gapgrid{grid-template-columns:1fr}}
-.need{display:grid;gap:4px;margin-top:8px}
-.need .nt{font-size:13.5px}.need .nt a{color:var(--peri)}
-.act-need{background:var(--maroon-soft);color:var(--maroon);justify-self:start}
-.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:9px 14px;border-radius:9px;font-weight:600;z-index:60;font-size:14px}
-.empty{padding:28px;text-align:center;color:var(--muted)}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
-
-.hero{margin-top:28px;max-width:66ch}
-.hero h1{font-size:clamp(26px,4vw,36px);margin-bottom:6px}
-.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px;margin-top:22px}
-.tool{display:grid;gap:8px;align-content:start;text-decoration:none;color:var(--fg);transition:border-color .15s}
-.tool:hover{border-color:var(--peri)}
-.tool h2{font-size:19px}
-.tool .go{color:var(--peri);font-weight:700;font-size:14px;margin-top:4px}
-.tool ul{margin:0;padding-left:18px;font-size:14px;color:var(--muted);display:grid;gap:3px}
-.foot{margin-top:26px;font-size:13px;color:var(--muted)}
-body{padding-top:env(safe-area-inset-top,0px)}
-</style></head><body>
-<header class="bar"><div class="wrap"><div class="mark"><div class="dot" aria-hidden="true">S</div><div><b>SchoolSims</b><span>Sales Tools</span></div></div></div></header>
-<main class="wrap">
-  <section class="hero"><span class="label">Internal</span><h1>SchoolSims sales tools</h1><p class="muted">Plan outreach, keep renewals moving, and write emails in the SchoolSims voice. Files you upload stay in your browser.</p></section>
-  <section class="tools">
-    <a class="card tool" href="/outbound"><span class="label">Prospecting</span><h2>Outbound Planner</h2><p class="muted">Turn the HubSpot contact list into a week of calls, voicemails and emails.</p><ul><li>Companies per day from your pipeline gap</li><li>Scripts for every contact</li><li>Companies that still need contacts</li></ul><span class="go">Open the planner →</span></a>
-    <a class="card tool" href="/client-outreach"><span class="label">Clients</span><h2>Client Outreach</h2><p class="muted">Load the Salesforce outreach and renewal reports and see what's at risk.</p><ul><li>Dashboard by owner</li><li>$ in jeopardy and $ with no status</li><li>Daily renewal and proactive plan</li></ul><span class="go">Open client outreach →</span></a>
-    <a class="card tool" href="/emails"><span class="label">Writing</span><h2>Email Writer</h2><p class="muted">Three plain-text emails, a voicemail and a send plan for any contact.</p><ul><li>Prospects, clients and former clients</li><li>Uses only SchoolSims.com facts</li><li>Send days and times by segment</li></ul><span class="go">Write emails →</span></a>
-  </section>
-  <section class="apps"><h2>Other tools</h2>
-    <!-- Edit these links here: Salesforce, Confluence and Jira go to generic login pages until your company URLs are added. -->
-    <div class="applist"><a class="app" href="https://edleadershipsims.lightning.force.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10" /></svg><div><b>Salesforce</b><span>Renewals and opportunities</span></div></a><a class="app" href="https://app.hubspot.com/contacts/5514837" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="5" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="18" cy="19" r="2"/><path d="M7 6.5 10 10M17.5 7.5 14 10.5M16.5 17.5 14 14"/></svg><div><b>HubSpot</b><span>Contacts, lists and sequences</span></div></a><a class="app" href="https://home.atlassian.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><div><b>Confluence</b><span>Docs and playbooks</span></div></a><a class="app" href="https://home.atlassian.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16"/></svg><div><b>Jira</b><span>Product tickets</span></div></a><a class="app" href="https://admin.schoolsims.com/login" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg><div><b>SchoolSims admin</b><span>Client portal</span></div></a><a class="app" href="https://www.schoolsims.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg><div><b>SchoolSims.com</b><span>Website and resources</span></div></a></div>
-  </section>
-  <p class="foot">Questions or ideas for these tools? Ask Brian.</p>
+  <div class="guide">
+    <div class="kicker">Choosing a School</div>
+    <h2><a href="/guides/campus-visit-guide.html">The Campus Visit Guide: What to Look For and What to Ask</a></h2>
+    <p>Tour guides show you what the admissions office wants you to see. Here's how to see the rest — the questions, detours, and observations that reveal what a campus is really like.</p>
+    <a class="read" href="/guides/campus-visit-guide.html">Read the guide →</a>
+  </div>
 </main>
-</body></html>
+<footer>
+  <a href="/">Home</a> · <a href="/guides/index.html">Guides</a> · <a href="/about.html">About</a> · <a href="/contact.html">Contact</a> · <a href="/privacy.html">Privacy Policy</a>
+  <p style="margin-top:10px">© 2026 College Fit Finder · searchcolleges.ai</p>
+</footer>
+</body>
+</html>

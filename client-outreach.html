@@ -1,5 +1,5 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
-<title>SchoolSims Renewal Planner</title>
+<title>Momentum · Client Outreach</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
@@ -210,6 +210,13 @@ tr.ex td:first-child,tr.ex td:last-child{opacity:1}
 .welcome h1{font-size:26px;margin:4px 0 6px}
 .welcome ol{margin:0;padding-left:20px;display:grid;gap:6px;font-size:14px}
 @media (max-width:760px){.welcome{grid-template-columns:1fr}}
+.brandlogo{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none;margin-right:auto;min-width:0}
+.brandlogo .chip{background:#fff;border-radius:10px;padding:5px 10px;display:flex;align-items:center;height:40px;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+.brandlogo .chip img{height:28px;width:auto;display:block}
+.brandlogo .chip.fallback{background:var(--maroon);width:40px;padding:0;justify-content:center;color:#fff;font:700 18px/1 var(--f-display);border-radius:50%}
+.brandlogo .nm{display:grid;line-height:1.15;min-width:0}
+.brandlogo .nm b{font:700 19px/1.1 var(--f-display);letter-spacing:-.01em}
+.brandlogo .nm span{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:9px 14px;border-radius:9px;font-weight:600;z-index:60;font-size:14px}
 .empty{padding:28px;text-align:center;color:var(--muted)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -248,213 +255,7 @@ tr.ex td:first-child,tr.ex td:last-child{opacity:1}
 @media (max-width:520px){.hb{grid-template-columns:minmax(0,1fr) auto}.hb .ht{grid-column:1/-1;order:3}.ownerpick .label{display:none}}
 </style>
 <header class="bar"><div class="wrap">
-  <a class="mark" href="/" title="All SchoolSims tools" style="color:inherit;text-decoration:none"><div class="dot" aria-hidden="true">S</div><div><b>SchoolSims</b><span>Renewal &amp; Outreach Planner</span></div></a>
-  <label class="ownerpick"><span class="label">Owner</span><select id="owner"></select></label>
-  <button class="btn primary" id="btnXlsx">Download plan (.xlsx)</button>
-</div></header>
-
-<main class="wrap">
-  <nav class="stepper" aria-label="Steps">
-    <button class="stp" data-go="1"><i>1</i><span>Load reports</span></button>
-    <button class="stp" data-go="2"><i>2</i><span>Dashboard</span></button>
-    <button class="stp" data-go="3"><i>3</i><span>Review accounts</span></button>
-    <button class="stp" data-go="4"><i>4</i><span>Weekly plan</span></button>
-  </nav>
-
-  <section id="step1" class="stepview">
-    <div class="card">
-      <div class="shd"><span class="label">Step 1</span><h2>Pick the owner and load the two reports</h2></div>
-      <p class="muted" style="max-width:72ch">Export both Salesforce reports to Excel and drop them in together. The planner tells them apart by their columns.</p>
-      <div id="sampleBanner" class="banner" style="margin-top:12px" hidden>Showing made-up example accounts so you can see how it works. Load your two reports to replace them.</div>
-      <div class="uploads" style="margin-top:12px">
-        <label class="drop" id="drop"><input type="file" id="files" accept=".xlsx,.xls,.csv" multiple><div class="top"><h3>Drop both report files here</h3></div><p class="stat muted">Or tap to choose them. .xlsx or .csv.</p></label>
-        <div class="card flat" id="srcList"></div>
-      </div>
-      <div class="settings">
-        <div class="field"><label class="label" for="owner2">Owner</label><select id="owner2"></select></div>
-        <div class="field"><label class="label" for="sStart">Plan starts</label><input id="sStart" type="date"></div>
-        <div class="field"><label class="label" for="sPer">Accounts per day, per owner</label><input id="sPer" type="number" min="1" max="30"></div>
-        <div class="field"><label class="label" for="sTz">Owner time zone</label><select id="sTz"></select></div>
-        <div class="field"><label class="label" for="sStale">Outreach is stale after (days)</label><input id="sStale" type="number" min="1" max="120"></div>
-        <div class="field"><label class="label" for="sPhone">Phone for voicemails</label><input id="sPhone" placeholder="610-555-0100"></div>
-      </div>
-    </div>
-    <div class="next"><button class="btn primary" data-go="2">Next: see the dashboard</button></div>
-  </section>
-
-  <section id="step2" class="stepview" hidden>
-    <div id="dash"></div>
-    <div class="next"><button class="btn" data-go="1">Back</button><button class="btn primary" data-go="3">Next: review accounts</button></div>
-  </section>
-
-  <section id="step3" class="stepview" hidden>
-    <div class="card">
-      <div class="shd"><span class="label">Step 3</span><h2>Review accounts and exclude any that don't need a touch</h2></div>
-      <p class="muted" id="revSummary"></p>
-      <div class="revtools"><input id="revQ" type="search" placeholder="Search accounts or notes" aria-label="Search accounts"><div class="seg sm" role="group" id="revF"><button data-rf="all" aria-pressed="true">All</button><button data-rf="plan" aria-pressed="false">In the plan</button><button data-rf="ex" aria-pressed="false">Excluded</button></div></div>
-      <div id="revTable"></div>
-    </div>
-    <div class="next"><button class="btn" data-go="2">Back</button><button class="btn primary" data-go="4">Next: build the plan</button></div>
-  </section>
-
-  <section id="step4" class="stepview" hidden>
-    <div class="strip" id="strip"></div>
-    <nav class="tabs" role="tablist">
-      <button class="tab" role="tab" data-tab="plan" aria-selected="true">Daily plan</button>
-      <button class="tab" role="tab" data-tab="backlog" aria-selected="false">Backlog</button>
-      <button class="tab" role="tab" data-tab="scripts" aria-selected="false">Scripts &amp; cadence</button>
-    </nav>
-    <section class="panel" id="panel"></section>
-  </section>
-</main>
-<div id="drawerHost"></div>
-
-<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
-<script>
-"use strict";
-/* ---------- utilities ---------- */
-const $=s=>document.querySelector(s);
-const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const norm=s=>String(s??"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
-const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-const num=v=>{if(typeof v==="number")return v;const n=parseFloat(String(v??"").replace(/[^0-9.\-]/g,""));return isFinite(n)?n:0};
-const money=n=>"$"+Math.round(n||0).toLocaleString("en-US");
-const kfmt=n=>Math.abs(n)>=1e6?"$"+(n/1e6).toFixed(2)+"M":Math.abs(n)>=1e4?"$"+Math.round(n/1e3)+"k":Math.abs(n)>=1e3?"$"+(n/1e3).toFixed(1)+"k":money(n);
-const TODAY=(()=>{const d=new Date();d.setHours(0,0,0,0);return d})();
-function parseDate(v){if(v==null||v==="")return null;if(v instanceof Date)return isNaN(v)?null:new Date(v.getFullYear(),v.getMonth(),v.getDate());if(typeof v==="number"&&v>20000&&v<80000){const d=new Date(Math.round((v-25569)*864e5));return new Date(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate())}
-  const s=String(v).trim();let m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})/);if(m){let y=+m[3];if(y<100)y+=2000;return new Date(y,+m[1]-1,+m[2])}m=s.match(/^(\d{4})-(\d{2})-(\d{2})/);if(m)return new Date(+m[1],+m[2]-1,+m[3]);return null}
-const daysFrom=d=>d?Math.round((d-TODAY)/864e5):null; // negative = past
-const fmtD=d=>d?`${d.getMonth()+1}/${d.getDate()}/${String(d.getFullYear()).slice(2)}`:"";
-const store={get(k,f){try{const v=localStorage.getItem("ssrp_"+k);return v?JSON.parse(v):f}catch{return f}},set(k,v){try{localStorage.setItem("ssrp_"+k,JSON.stringify(v))}catch{}}};
-function toast(msg){const t=document.createElement("div");t.className="toast";t.textContent=msg;document.body.append(t);setTimeout(()=>t.remove(),2400)}
-async function copyText(text,btn){try{await navigator.clipboard.writeText(text);toast("Copied")}catch{const el=btn?.closest(".doc")?.querySelector("pre");if(el){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);toast("Selected. Press Ctrl/Cmd+C")}}}
-function iso(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`}
-function defaultStart(){const d=new Date(TODAY);const w=d.getDay();if(w===6)d.setDate(d.getDate()+2);else if(w===0)d.setDate(d.getDate()+1);else if(w===5&&new Date().getHours()>=15)d.setDate(d.getDate()+3);return iso(d)}
-function planDays(start){const d=parseDate(start)||TODAY;const out=[];const c=new Date(d);while(c.getDay()===0||c.getDay()===6)c.setDate(c.getDate()+1);do{out.push(new Date(c));c.setDate(c.getDate()+1)}while(c.getDay()!==6&&c.getDay()!==0);return out}
-const DOWL=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-
-/* ---------- time zones ---------- */
-const AE_TZS=[["America/New_York","Eastern"],["America/Chicago","Central"],["America/Denver","Mountain"],["America/Phoenix","Arizona"],["America/Los_Angeles","Pacific"]];
-function tzOffset(tz,date){const p=new Intl.DateTimeFormat("en-US",{timeZone:tz,hourCycle:"h23",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"}).formatToParts(date);const g=t=>+p.find(x=>x.type===t).value;return Math.round((Date.UTC(g("year"),g("month")-1,g("day"),g("hour"),g("minute"))-date.getTime())/6e4)}
-function zoned(d,mins,tz){const guess=Date.UTC(d.getFullYear(),d.getMonth(),d.getDate(),0,mins);return new Date(guess-tzOffset(tz,new Date(guess))*6e4)}
-const fmtT=(d,tz)=>new Intl.DateTimeFormat("en-US",{timeZone:tz,hour:"numeric",minute:"2-digit"}).format(d);
-
-/* ---------- owners ---------- */
-const OWNERS=[["all","Everyone"],["brian","Brian"],["brent","Brent"],["janet","Janet"],["ken","Ken"]];
-const ownerKey=name=>{const f=norm(name).split(" ")[0];return["brian","brent","janet","ken"].includes(f)?f:(f?"other":"unassigned")};
-const firstName=name=>String(name||"").trim().split(/\s+/)[0]||"";
-
-/* ---------- column mapping ---------- */
-const MAP_PO={account:["account name","account"],lastOutreach:["last outreach usage stats update","last outreach"],comments:["full comments","comments","description"],u90:["last 90 days usage"],u365:["last 365 days usage"],contractEnd:["contract end","contract end date"],modified:["last modified date"],subject:["subject"],arr:["current arr","arr"],owner:["assigned","assigned to","owner"],due:["date","due date","activity date"],tier:["usage tier"]};
-const MAP_RN={account:["account name","account"],nextStep:["next step"],closing:["client closing process"],u90:["last 90 days usage"],nps:["nps score","nps"],cps:["cps"],poResult:["proactive outreach result"],lastIncrease:["last increase date"],amount:["amount"],type:["type"],invoicing:["invoicing preference"],payment:["payment preference"],checkDate:["check received date"],opp:["opportunity name"],contractStart:["contract start"],termStart:["current term contract start"],contractEnd:["contract end"],owner:["opportunity owner","owner"],lastOutreach:["last outreach usage stats update","last outreach"],stage:["stage"],closeMonth:["close month","close date"],status:["renewal status"]};
-function mapCols(headers,map){const H=headers.map(h=>({raw:h,n:norm(h)}));const out={},used=new Set();for(const[f,al]of Object.entries(map)){const h=H.find(h=>!used.has(h.raw)&&al.includes(h.n));if(h){out[f]=h.raw;used.add(h.raw)}}return out}
-function project(rows,cols){return rows.map(r=>{const o={};for(const[f,h]of Object.entries(cols))o[f]=r[h]??"";return o})}
-const isJunk=a=>!a||/^(confidential|copyright|total|grand total|filtered by|count)/i.test(String(a).trim());
-
-/* ---------- state ---------- */
-const S={po:[],rn:[],sample:true,sources:[],accounts:[],excluded:{},
-  settings:Object.assign({owner:"all",start:defaultStart(),per:8,tz:"America/New_York",stale:21,phone:""},store.get("settings",{})),
-  step:1,tab:"plan",day:0,rf:"all",q:""};
-if((parseDate(S.settings.start)||TODAY)<TODAY)S.settings.start=defaultStart();
-function persist(){store.set("settings",S.settings);if(!S.sample)store.set("excluded",S.excluded)}
-
-/* ---------- model ---------- */
-const CLOSED=/closed/i;
-const RISK=/risk|churn|jeopard|at risk|cancel/i;
-function statusLabel(s){s=String(s||"").trim();return s||"No status"}
-function buildAccounts(){const byKey=new Map();const get=(name)=>{const k=norm(name);if(!byKey.has(k))byKey.set(k,{key:k,name:String(name).trim(),po:[],rn:[]});return byKey.get(k)};
-  S.po.forEach(t=>get(t.account).po.push(t));S.rn.forEach(o=>get(o.account).rn.push(o));
-  const out=[];for(const a of byKey.values()){
-    a.openRn=a.rn.filter(o=>!CLOSED.test(o.stage));a.wonRn=a.rn.filter(o=>/won/i.test(o.stage));
-    const lead=a.openRn[0]||a.rn[0];const task=[...a.po].sort((x,y)=>(parseDate(x.due)||0)-(parseDate(y.due)||0))[0];
-    a.owner=String(lead?.owner||task?.owner||"").trim();a.ok=ownerKey(a.owner);
-    a.amount=a.openRn.reduce((s,o)=>s+num(o.amount),0);a.arr=Math.max(0,...a.po.map(t=>num(t.arr)));a.value=a.amount||a.arr;
-    a.status=a.openRn.length?statusLabel(a.openRn.find(o=>String(o.status||"").trim())?.status):"";
-    a.stage=lead?.stage||"";a.contractEnd=parseDate(lead?.contractEnd||task?.contractEnd);a.endDays=daysFrom(a.contractEnd);
-    a.notes=[];const outs=[...a.po.map(t=>parseDate(t.lastOutreach)),...a.rn.map(o=>parseDate(o.lastOutreach)),...[...a.rn.flatMap(o=>[o.nextStep,o.closing]),...a.po.map(t=>t.comments)].map(noteDate)].filter(Boolean);a.noteTouch=null;a.lastOutreach=outs.length?new Date(Math.max(...outs)):null;a.sinceOutreach=a.lastOutreach?-daysFrom(a.lastOutreach):null;
-    a.u90=Math.max(0,...[...a.po,...a.rn].map(x=>num(x.u90)));a.u365=Math.max(0,...a.po.map(t=>num(t.u365)));a.tier=task?.tier||"";a.tierN=parseInt(String(a.tier).replace(/\D/g,""))||0;
-    a.due=task?parseDate(task.due):null;a.dueDays=daysFrom(a.due);a.subject=task?.subject||"";
-    a.notes=[lead?.nextStep,lead?.closing,task?.comments].filter(x=>String(x||"").trim()).map(String);
-    a.nps=lead?.nps||"";a.poResult=lead?.poResult||"";a.invoicing=lead?.invoicing||"";a.payment=lead?.payment||"";a.type=lead?.type||"";a.opp=lead?.opp||"";a.closeMonth=parseDate(lead?.closeMonth);
-    classify(a);score(a);out.push(a)}
-  S.accounts=out}
-function classify(a){const txt=norm(a.notes.join(" "));const lowUse=a.u90===0||a.tierN>=5;a.lowUse=lowUse;
-  const jeopardy=[];if(a.openRn.length){if(RISK.test(a.status))jeopardy.push(a.status);if(a.endDays!==null&&a.endDays<-60)jeopardy.push(`Contract ended ${-a.endDays} days ago`);if(a.u90===0)jeopardy.push("No usage in 90 days")}
-  a.jeopardy=jeopardy;
-  if(a.openRn.length){
-    if(RISK.test(a.status)||(lowUse&&a.endDays!==null&&a.endDays<60))a.action="save";
-    else if(/negotiation|contract|proposal/i.test(a.stage)||/\b(po|invoice|payment|check|ach|stripe|processing)\b/.test(txt)||(a.endDays!==null&&a.endDays<0))a.action="collect";
-    else a.action="confirm"}
-  else if(a.po.length)a.action=lowUse?"recover":"expand";else a.action="none";
-  const stale=a.sinceOutreach===null||a.sinceOutreach>=S.settings.stale;const taskDue=a.po.length>0&&(a.dueDays===null||a.dueDays<=0||a.dueDays<=30);
-  a.needs=a.action!=="none"&&(taskDue||(a.openRn.length&&stale)||(a.openRn.length&&a.endDays!==null&&a.endDays<45));
-  a.stale=stale}
-const ACT={collect:["Collect PO / payment","act-collect"],save:["Save at-risk renewal","act-save"],confirm:["Confirm renewal","act-confirm"],recover:["Proactive: usage recovery","act-recover"],expand:["Proactive: check-in & expand","act-expand"],none:["No action","act-none"]};
-function score(a){let s=0;const why=[];
-  if(a.value>0){s+=Math.min(30,Math.log10(a.value+1)*7.5);why.push(`${kfmt(a.value)} ${a.amount?"renewal":"ARR"}`)}
-  if(a.openRn.length){if(a.endDays!==null&&a.endDays<0){s+=Math.min(25,10+(-a.endDays)/12);why.push(`Contract ended ${-a.endDays}d ago`)}else if(a.endDays!==null&&a.endDays<=60){s+=15;why.push(`Contract ends in ${a.endDays}d`)}
-    if(RISK.test(a.status)){s+=20;why.push(a.status)}else if(a.status==="No status"){s+=8;why.push("No renewal status")}}
-  if(a.lowUse){s+=10;why.push(a.u90===0?"No usage in 90 days":`${a.tier}, low usage`)}
-  if(a.sinceOutreach!==null&&a.sinceOutreach<=7){s-=18;why.push(`Touched ${a.sinceOutreach}d ago`)}
-  if(a.sinceOutreach===null){s+=12;why.push("No outreach logged")}else if(a.sinceOutreach>=60){s+=15;why.push(`Last outreach ${a.sinceOutreach}d ago`)}else if(a.sinceOutreach>=S.settings.stale){s+=10;why.push(`Last outreach ${a.sinceOutreach}d ago`)}
-  if(a.po.length&&a.dueDays!==null&&a.dueDays<0){s+=Math.min(12,4+(-a.dueDays)/15);why.push(`Outreach task ${-a.dueDays}d overdue`)}
-  a.score=clamp(Math.round(s*1.1),0,100);a.why=why}
-
-function noteDate(t){const m=String(t||"").match(/^\s*(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?/);if(!m)return null;let y=m[3]?+m[3]:TODAY.getFullYear();if(y<100)y+=2000;let d=new Date(y,+m[1]-1,+m[2]);if(isNaN(d)||+m[1]>12)return null;if(!m[3]&&d>TODAY)d=new Date(y-1,+m[1]-1,+m[2]);return d}
-/* ---------- owner scoping ---------- */
-const inOwner=a=>S.settings.owner==="all"||a.ok===S.settings.owner;
-const ownerLabel=()=>OWNERS.find(o=>o[0]===S.settings.owner)[1];
-
-/* ---------- plan ---------- */
-function buildPlan(){const st=S.settings;const days=planDays(st.start).map((d,i)=>({i,d,items:[]}));
-  const pool=S.accounts.filter(a=>inOwner(a)&&a.needs&&!S.excluded[a.key]).sort((x,y)=>y.score-x.score);
-  const byOwner=new Map();pool.forEach(a=>{const k=a.owner||"Unassigned";if(!byOwner.has(k))byOwner.set(k,[]);byOwner.get(k).push(a)});
-  const planned=new Set();for(const[,list]of byOwner){list.forEach((a,idx)=>{const di=Math.floor(idx/st.per);if(di<days.length){days[di].items.push(a);planned.add(a.key)}})}
-  days.forEach(schedule);S.plan={days,pool,planned,backlog:pool.filter(a=>!planned.has(a.key))}}
-const K12=/district|public schools|county schools|city schools|\bisd\b|\busd\b|unified|academy|school\b/i;
-function schedule(day){const tz=S.settings.tz;const ev=[];const owners=[...new Set(day.items.map(a=>a.owner||"Unassigned"))];
-  owners.forEach(o=>{const list=day.items.filter(a=>(a.owner||"Unassigned")===o);let am=zoned(day.d,570,tz).getTime(),pm=zoned(day.d,840,tz).getTime();
-    ev.push({t:new Date(zoned(day.d,540,tz)),kind:"pr",owner:o,title:"Prep (30 min)",sub:"Open each account in Salesforce. Read the latest notes, confirm the contact and the renewal amount, and pull current usage."});
-    list.forEach(a=>{const k12=K12.test(a.name)&&!/universit|college/i.test(a.name);const renew=a.openRn.length>0;
-      const t1=new Date(Math.max(am,k12?zoned(day.d,450,tz).getTime():0));am=t1.getTime()+7*6e4;
-      a._t1=t1;a._s1=renew?"Call":"Email";ev.push({t:t1,kind:renew?"c1":"em",owner:o,a,title:renew?"Call":"Send email"});
-      a._e1=new Date(t1.getTime()+4*6e4);if(renew)ev.push({t:a._e1,kind:"em",owner:o,a,title:"Email if no answer"});
-      const needPm=renew||a.lowUse||a.value>=5000;if(needPm){const t2=new Date(Math.max(pm,k12?zoned(day.d,930,tz).getTime():0));pm=t2.getTime()+6*6e4;a._t2=t2;ev.push({t:t2,kind:"c2",owner:o,a,title:"Call 2 + voicemail"})}else a._t2=null;
-      a._log=true})});
-  ev.sort((x,y)=>x.t-y.t);day.events=ev}
-
-/* ---------- scripts ---------- */
-function scripts(a){const st=S.settings;const me=firstName(a.owner)||"[Your name]";const ph=st.phone||"[your number]";const acct=a.name;const c="[Contact]";
-  const end=a.contractEnd?fmtD(a.contractEnd):"your renewal date";const usage=a.u90>0?`${a.u90.toLocaleString()} simulation sessions in the last 90 days`:"no simulation activity in the last 90 days";
-  const amt=a.amount?money(a.amount):"";
-  const T={
-  collect:{subj:[`${acct} renewal: PO or payment status`,`Quick check on the SchoolSims invoice`],
-   email:`Hi ${c},\n\nI'm following up on the SchoolSims renewal for ${acct}${amt?` (${amt})`:""}. Your current term ${a.endDays!==null&&a.endDays<0?"ended on":"runs through"} ${end}.\n\nCould you let me know where the PO or payment stands, and whether anyone else in purchasing or AP should be on this thread? If it helps, I can resend the invoice or a W-9 today.\n\nThank you,\n${me}\nSchoolSims\n${ph}`,
-   call:`OPENER\n"Hi ${c}, it's ${me} from SchoolSims. I'm calling about the ${acct} renewal. Do you have a minute?"\n\nGOAL: get a date and a name for the PO or payment.\n- "Where is the renewal in your process right now?"\n- "Who in purchasing or AP should I be working with?"\n- "Is there anything you need from us: invoice, quote, W-9, sole-source letter?"\n\nCLOSE\n"Great. I'll send the ${a.invoicing?a.invoicing.toLowerCase():"invoice"} today. Can I check back on [date]?"\n\nIF THE BUDGET IS STUCK\n"Would splitting the term, or starting with fewer seats, help it move this cycle?"`,
-   vm:`"Hi ${c}, it's ${me} from SchoolSims, ${ph}. I'm checking on the PO for the ${acct} renewal. I'm sending a quick email now with the invoice attached, so you have it handy. Again, ${me}, ${ph}. Thanks."`},
-  save:{subj:[`Making SchoolSims work for ${acct} this term`,`A quick plan to get more value from SchoolSims`],
-   email:`Hi ${c},\n\nI looked at ${acct}'s account and saw ${usage}. With the term ${a.endDays!==null&&a.endDays<0?"that ended on":"ending on"} ${end}, I want to make sure you're getting real value before anything is decided.\n\nWould you be open to a 20-minute call? I'd like to hear what's changed, and I can show you a short plan: which simulations fit your current courses or PD calendar, and a ready-made assignment faculty can drop in this month.\n\nWould ${nextDay(1)} or ${nextDay(2)} work?\n\n${me}\nSchoolSims\n${ph}`,
-   call:`OPENER\n"Hi ${c}, it's ${me} with SchoolSims. I'm reaching out personally about ${acct}. Is now an okay time?"\n\nLISTEN FIRST\n- "How has SchoolSims fit into your program this year?"\n- "What got in the way of using it more: timing, faculty turnover, where it sits in the course?"\n- "What would make it clearly worth renewing?"\n\nOFFER\n"Here's what we can do: a 30-minute setup with your faculty, simulations mapped to your ${/universit|college/i.test(acct)?"course sequence and CAEP or AAQEP evidence":"PD calendar"}, and a usage check-in in 30 days."\n\nASK\n"If we get it running this month, can we keep the renewal moving in parallel?"\n\nIF THEY SAY THEY'RE CANCELING\n"I understand. Would you share what drove it? And would a smaller or single-cohort option be worth a look?"`,
-   vm:`"Hi ${c}, it's ${me} from SchoolSims, ${ph}. I'm calling about ${acct}'s SchoolSims account. I have a few ideas to make it easier for your faculty to use this term. I'm sending a short email now. Again, ${me}, ${ph}."`},
-  confirm:{subj:[`${acct}: planning for your SchoolSims renewal`,`Your SchoolSims term ends ${end}`],
-   email:`Hi ${c},\n\nYour SchoolSims term runs through ${end}, so I wanted to get ahead of the renewal. Your team has logged ${usage}.\n\nIs renewal on your radar, and is anything changing on your side: new programs, new faculty, or a different budget source? If it's easier, I can send the renewal quote now so it's ready for your process.\n\n${me}\nSchoolSims\n${ph}`,
-   call:`OPENER\n"Hi ${c}, it's ${me} from SchoolSims. I'm calling to get ahead of your renewal. Your term runs through ${end}."\n\nCONFIRM\n- "Are you planning to continue?"\n- "Who else signs off, and what does your process look like?"\n- "Any changes in programs, cohorts or budget source?"\n\nSHARE\n"Your team logged ${usage}. There's also new AI coaching and cohort reporting you may not have seen yet."\n\nCLOSE\n"I'll send the renewal quote today. When should I check back?"`,
-   vm:`"Hi ${c}, it's ${me} from SchoolSims, ${ph}. I'm calling to get ahead of your SchoolSims renewal, since your term runs through ${end}. I'll send a short email now. Again, ${me}, ${ph}."`},
-  recover:{subj:[`Getting ${acct} back into SchoolSims`,`A ready-to-use simulation for this month`],
-   email:`Hi ${c},\n\nI noticed ${acct} has had ${usage}. That usually means timing or setup got in the way, not interest.\n\nI can help in 20 minutes: pick two simulations that fit what you're teaching or training now, and set them up as an assignment so faculty don't have to. Would ${nextDay(1)} or ${nextDay(2)} work?\n\n${me}\nSchoolSims\n${ph}`,
-   call:`OPENER\n"Hi ${c}, it's ${me} from SchoolSims. I'm checking in on how things are going with SchoolSims this term."\n\nDISCOVER\n- "Where does SchoolSims fit in your courses or PD right now?"\n- "Who else on your team should be using it?"\n- "What's the easiest way to get it in front of people this month?"\n\nOFFER\n"I can set up two simulations as a ready-made assignment and send faculty a one-page guide."\n\nCLOSE\n"Can we book 20 minutes this week to set that up?"`,
-   vm:`"Hi ${c}, it's ${me} from SchoolSims, ${ph}. I'm checking in on ${acct}'s SchoolSims account and have an easy way to get it in front of your faculty this month. I'll send an email now. ${me}, ${ph}."`},
-  expand:{subj:[`${acct}: your SchoolSims results so far`,`Could we share ${acct}'s SchoolSims story?`],
-   email:`Hi ${c},\n\n${acct} has logged ${usage}, which puts you among our most active partners. Thank you.\n\nTwo quick questions: is there another program or department that could use the same simulations, and would you be open to a short case study or reference call?\n\nHappy to share what similar institutions have added this year.\n\n${me}\nSchoolSims\n${ph}`,
-   call:`OPENER\n"Hi ${c}, it's ${me} from SchoolSims. Your team has been using SchoolSims a lot, so I wanted to say thank you and see what's working."\n\nDISCOVER\n- "Which simulations are getting the most use?"\n- "Which other programs could use them: counseling, leadership, CTE?"\n- "Anything you'd want us to build?"\n\nASK\n"Would you be open to a short case study or reference call?"`,
-   vm:`"Hi ${c}, it's ${me} from SchoolSims, ${ph}. Your team's use of SchoolSims has been great, and I'd love 10 minutes to hear what's working. I'll send a quick email. ${me}, ${ph}."`}};
-  return T[a.action]||T.confirm}
-function nextDay(n){const d=new Date(parseDate(S.settings.start)||TODAY);let k=0;while(k<n){d.setDate(d.getDate()+1);if(d.getDay()&&d.getDay()<6)k++}return DOWL[d.getDay()]}
-
-/* ---------- render ---------- */
-function render(){if(S.step===1)renderSources();if(S.step===2)renderDash();if(S.step===3)renderReview();if(S.step===4)render4()}
-function renderSources(){const po=S.sources.find(s=>s.kind==="po"),rn=S.sources.find(s=>s.kind==="rn");
-  const row=(lab,s,n)=>`<div class="srcrow"><span class="pill ${s?"p-indep":S.sample?"mined":"p-other"}">${s?"Loaded":S.sample?"Example":"Needed"}</span><div style="min-width:0"><b>${lab}</b><div class="muted" style="font-size:13px;overflow-wrap:anywhere">${s?`${esc(s.file)} · ${n} rows${s.miss.length?` · not found: ${esc(s.miss.join(", "))}`:""}`:"Drop this report export here"}</div></div></div>`;
+  <a class="brandlogo" href="/" title="Momentum home"><span class="chip"><img src="/schoolsims-logo.png" alt="SchoolSims" onerror="this.parentNode.classList.add('fallback');this.parentNode.textContent='S'"></span><span class="nm"><b>Momentum</b><span>Client Outreach</span></span></a>`;
   $("#srcList").innerHTML=row("Proactive outreach report (PO Due / Escalated)",po,S.po.length)+row("Renewal funnel report",rn,S.rn.length);$("#sampleBanner").hidden=!S.sample}
 function bars(rows,fmt,cls=""){const max=Math.max(1,...rows.map(r=>r.v));return `<div class="hbars">${rows.map(r=>`<div class="hb"><span class="hl">${esc(r.k)}</span><span class="ht"><i class="${r.c||cls}" style="width:${Math.max(r.v?2:0,r.v/max*100)}%"></i></span><span class="hv mono">${fmt(r.v)}${r.n!=null?` <small class="muted">· ${r.n}</small>`:""}</span></div>`).join("")}</div>`}
 function renderDash(){const A=S.accounts.filter(inOwner);const open=A.filter(a=>a.openRn.length);
