@@ -1,3 +1,6 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "redirects": [
+    { "source": "/renewals", "destination": "/client-outreach", "permanent": false }
+  ]
 }
