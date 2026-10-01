@@ -1,5 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
-<title>SchoolSims Email Writer</title>
+<link rel="icon" href="https://www.schoolsims.com/wp-content/uploads/2026/06/cropped-new_ss_logo-1-270x270.png">
+<title>Momentum · Email Writer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
@@ -227,6 +228,13 @@ tr.ex td:first-child,tr.ex td:last-child{opacity:1}
 .need{display:grid;gap:4px;margin-top:8px}
 .need .nt{font-size:13.5px}.need .nt a{color:var(--peri)}
 .act-need{background:var(--maroon-soft);color:var(--maroon);justify-self:start}
+.brandlogo{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none;margin-right:auto;min-width:0}
+.brandlogo .chip{background:#fff;border-radius:10px;padding:5px 10px;display:flex;align-items:center;height:40px;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+.brandlogo .chip img{height:28px;width:auto;display:block}
+.brandlogo .chip.fallback{background:var(--maroon);width:40px;padding:0;justify-content:center;color:#fff;font:700 18px/1 var(--f-display);border-radius:50%}
+.brandlogo .nm{display:grid;line-height:1.15;min-width:0}
+.brandlogo .nm b{font:700 19px/1.1 var(--f-display);letter-spacing:-.01em}
+.brandlogo .nm span{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:9px 14px;border-radius:9px;font-weight:600;z-index:60;font-size:14px}
 .empty{padding:28px;text-align:center;color:var(--muted)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -271,7 +279,7 @@ textarea{border:1px solid var(--line);background:var(--surface);border-radius:8p
 .check input{width:auto!important}
 </style>
 <header class="bar"><div class="wrap">
-  <a class="mark" href="/" title="All SchoolSims tools" style="color:inherit;text-decoration:none"><div class="dot" aria-hidden="true">S</div><div><b>SchoolSims</b><span>Email Writer</span></div></a>
+  <a class="brandlogo" href="/" title="Momentum home"><span class="chip"><img src="https://www.schoolsims.com/wp-content/uploads/2025/01/WebsiteLogo.png" alt="SchoolSims" onerror="this.parentNode.classList.add('fallback');this.parentNode.textContent='S'"></span><span class="nm"><b>Momentum</b><span>Email Writer</span></span></a>
   <span class="muted engine" id="engine"></span>
 </div></header>
 
