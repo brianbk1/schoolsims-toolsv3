@@ -251,26 +251,59 @@ tr.ex td:first-child,tr.ex td:last-child{opacity:1}
 <main class="wrap">
   <section class="card welcome">
     <div><span class="label">For Janet</span><h1>Plan your outbound week</h1>
-    <p class="muted">About 10 minutes each Monday. Work through steps 1 to 4 in order; your settings and exclusions stay in this browser for next time.</p></div>
+    <p class="muted">About 10 minutes each Monday. Work through the steps in order; your settings and exclusions stay in this browser for next time.</p></div>
     <ol>
+      <li><b>Pipeline target.</b> Download the pipeline report from Salesforce and upload it, or type in closed won and open pipeline. It sets companies per day, up to 5.</li>
       <li><b>Contact list.</b> Export the SchoolSims contact list from HubSpot and upload it.</li>
       <li><b>Last week's updates.</b> Run the Breeze prompt in HubSpot and upload the spreadsheet it gives you.</li>
       <li><b>Review accounts.</b> See this week's suggested accounts, skip and replace any you shouldn't call, and see what dropped off and why.</li>
       <li><b>Weekly plan.</b> Follow the day's schedule, tap a contact for scripts, and download the .xlsx.</li>
-      <li><b>Pipeline target</b> (once a month). Update closed won and open pipeline; it sets companies per day, up to 5.</li>
     </ol>
   </section>
   <nav class="stepper" aria-label="Steps">
-    <button class="stp" data-go="1"><i>1</i><span>Contact list</span></button>
-    <button class="stp" data-go="2"><i>2</i><span>Last week's updates</span></button>
-    <button class="stp" data-go="3"><i>3</i><span>Review accounts</span></button>
-    <button class="stp" data-go="4"><i>4</i><span>Weekly plan</span></button>
-    <button class="stp" data-go="5"><i>5</i><span>Pipeline target</span></button>
+    <button class="stp" data-go="1"><i>1</i><span>Pipeline target</span></button>
+    <button class="stp" data-go="2"><i>2</i><span>Contact list</span></button>
+    <button class="stp" data-go="3"><i>3</i><span>Last week's updates</span></button>
+    <button class="stp" data-go="4"><i>4</i><span>Review accounts</span></button>
+    <button class="stp" data-go="5"><i>5</i><span>Weekly plan</span></button>
   </nav>
 
   <section id="step1" class="stepview">
     <div class="card">
-      <div class="shd"><span class="label">Step 1</span><h2>Import the contact list from HubSpot</h2></div>
+      <div class="shd"><span class="label">Step 1</span><h2>Pipeline target: how much outbound do you need?</h2></div>
+      <p class="muted" style="max-width:70ch">Enter your goal, what you have already closed this year, and your current open pipeline. Closed-won deals come off the goal first, then the planner works back through close rate, a 90-day cycle and slow months to set how many companies to work each day.</p>
+      <ol class="howto">
+        <li><b>Open the pipeline report in Salesforce.</b>
+          <div class="urlrow"><a class="btn primary sm" href="https://edleadershipsims.lightning.force.com/lightning/r/Report/00OPQ000005YJN72AO/view?queryScope=userFolders" target="_blank" rel="noopener">Open the Salesforce report</a></div></li>
+        <li><b>Export it:</b> click the arrow next to Edit, choose <b>Export</b>, then <b>Details Only</b> and <b>.xlsx</b> (or .csv).</li>
+        <li><b>Upload it here.</b> The planner fills in closed won this year, open pipeline and average deal for you. You can still type over any number.</li>
+      </ol>
+      <div class="uploads" style="margin-top:12px">
+        <label class="drop" id="dropPipe"><input type="file" id="filePipe" accept=".xlsx,.xls,.csv"><div class="top"><h3>Upload the pipeline report</h3><span class="pill p-other" id="pipePill">Optional</span></div><p class="stat muted" id="pipeStat">Or skip this and type the numbers below.</p></label>
+      </div>
+      <div class="calc">
+        <div class="inputs">
+          <div class="field"><label class="label" for="pGoal">Annual sales goal ($)</label><input id="pGoal" inputmode="numeric"></div>
+          <div class="field"><label class="label" for="pWon">Closed won so far this year ($)</label><input id="pWon" inputmode="numeric" placeholder="From the Closed Won report"></div>
+          <div class="field"><label class="label" for="pPipe">Current open pipeline ($)</label><input id="pPipe" inputmode="numeric" placeholder="Total from the Salesforce report"></div>
+          <div class="field"><label class="label" for="pClose">Close rate (%)</label><input id="pClose" inputmode="numeric"></div>
+          <div class="field"><label class="label" for="pCycle">Sales cycle (days)</label><input id="pCycle" inputmode="numeric"></div>
+          <div class="field"><label class="label" for="pDeal">Average new deal ($)</label><input id="pDeal" inputmode="numeric" placeholder="Required"></div>
+          <div class="field"><label class="label" for="pM2o">Meetings that become pipeline (%)</label><input id="pM2o" inputmode="numeric"></div>
+          <div class="field"><label class="label" for="pA2m">Accounts worked that book a meeting (%)</label><input id="pA2m" inputmode="numeric"></div>
+          <div class="field"><label class="label" for="pLowW">Slow-month close volume (% of normal)</label><input id="pLowW" inputmode="numeric"></div>
+          <div class="field full"><span class="label">Slow closing months</span><div class="months" id="pLow"></div></div>
+        </div>
+        <div class="result" id="calcOut"></div>
+      </div>
+      <div id="calcTable" style="margin-top:16px"></div>
+    </div>
+    <div class="next"><button class="btn primary" data-go="2">Next: import the contact list</button></div>
+  </section>
+
+  <section id="step2" class="stepview" hidden>
+    <div class="card">
+      <div class="shd"><span class="label">Step 2</span><h2>Import the contact list from HubSpot</h2></div>
       <ol class="howto">
         <li><b>Open the list in HubSpot.</b> Log in if it asks.
           <div class="urlrow"><a class="btn primary sm" href="https://app.hubspot.com/contacts/5514837/objectLists/13913/filters" target="_blank" rel="noopener">Open the HubSpot list</a><code id="hsUrl">https://app.hubspot.com/contacts/5514837/objectLists/13913/filters</code><button class="btn sm" data-copytext="hsUrl">Copy link</button></div></li>
@@ -294,12 +327,12 @@ tr.ex td:first-child,tr.ex td:last-child{opacity:1}
         <div class="field" style="align-content:end"><label class="check"><input type="checkbox" id="sCust"> Leave out current clients and open opportunities</label><label class="check"><input type="checkbox" id="sRecent"> Leave out accounts worked in the last 7 days</label><label class="check"><input type="checkbox" id="sDrop"> Flag accounts to keep or replace when they say not interested, or after <input id="sMaxAtt" type="number" min="2" max="12" style="width:56px;padding:2px 6px"> weeks of outreach to a contact with no response (from Breeze)</label></div>
       </div>
     </div>
-    <div class="next"><button class="btn primary" data-go="2">Next: import last week's updates</button></div>
+    <div class="next"><button class="btn" data-go="1">Back</button><button class="btn primary" data-go="3">Next: import last week's updates</button></div>
   </section>
 
-  <section id="step2" class="stepview" hidden>
+  <section id="step3" class="stepview" hidden>
     <div class="card">
-        <div class="shd"><span class="label">Step 2</span><h2>Import last week's updates from Breeze</h2></div>
+        <div class="shd"><span class="label">Step 3</span><h2>Import last week's updates from Breeze</h2></div>
         <p class="muted" style="max-width:76ch">This shows the progress made on accounts last week. Accounts with a reply or a connected call move up for follow-up. Each contact gets 4 weeks of effort (set below; any week with an email or call to them counts). After that, a contact with no reply or connected call drops out of the call plan, while the rest of the account keeps going. A whole account drops only when it says it is not interested or every contact is done. After each import you'll see what is dropping off and why, and you can keep anything. Upload it every week so the weeks are counted.</p>
         <ol class="howto">
           <li><b>Open Breeze in HubSpot</b> (the Breeze assistant at the top of HubSpot).
@@ -313,13 +346,13 @@ tr.ex td:first-child,tr.ex td:last-child{opacity:1}
         </div>
         <div id="actOut"></div>
       </div>
-    <div class="next"><button class="btn" data-go="1">Back</button><button class="btn primary" data-go="3">Next: review accounts</button></div>
+    <div class="next"><button class="btn" data-go="2">Back</button><button class="btn primary" data-go="4">Next: review accounts</button></div>
   </section>
 
 
-  <section id="step3" class="stepview" hidden>
+  <section id="step4" class="stepview" hidden>
     <div class="card">
-      <div class="shd"><span class="label">Step 3</span><h2>Review this week's accounts</h2></div>
+      <div class="shd"><span class="label">Step 4</span><h2>Review this week's accounts</h2></div>
       <p class="muted" id="revSummary" style="margin-top:4px"></p>
       <div id="weekPicks"></div>
       <div id="dropOut"></div>
@@ -328,10 +361,10 @@ tr.ex td:first-child,tr.ex td:last-child{opacity:1}
       <div class="revtools"><input id="revQ" type="search" placeholder="Search accounts" aria-label="Search accounts"><div class="seg sm" role="group" id="revF"><button data-rf="all" aria-pressed="true">All</button><button data-rf="plan" aria-pressed="false">In this week</button><button data-rf="ex" aria-pressed="false">Excluded</button></div></div>
       <div id="revTable"></div></details>
     </div>
-    <div class="next"><button class="btn" data-go="2">Back</button><button class="btn primary" data-go="4">Next: build the weekly plan</button></div>
+    <div class="next"><button class="btn" data-go="3">Back</button><button class="btn primary" data-go="5">Next: build the weekly plan</button></div>
   </section>
 
-  <section id="step4" class="stepview" hidden>
+  <section id="step5" class="stepview" hidden>
     <div class="strip" id="strip"></div>
     <nav class="tabs" role="tablist">
       <button class="tab" role="tab" data-tab="plan" aria-selected="true">Week plan</button>
@@ -341,30 +374,7 @@ tr.ex td:first-child,tr.ex td:last-child{opacity:1}
     <section class="panel" id="panel"></section>
   </section>
 
-  <section id="step5" class="stepview" hidden>
-    <div class="card">
-      <div class="shd"><span class="label">Step 5 · update monthly</span><h2>Pipeline target: how much outbound do you need?</h2></div>
-      <p class="muted" style="max-width:70ch">Enter your goal, what you have already closed this year, and your current open pipeline. Closed-won deals come off the goal first, then the planner works back through close rate, a 90-day cycle and slow months to set how many companies to work each day.</p>
-      <div class="srcbox"><div><b>Where to find these numbers:</b> open your pipeline report in Salesforce. Use its total for <b>Current open pipeline</b>, and its deal amounts to set <b>Average new deal</b>. For <b>Closed won so far this year</b>, filter the same report to Closed Won with a close date this calendar year.</div><a class="btn primary sm" href="https://edleadershipsims.lightning.force.com/lightning/r/Report/00OPQ000005YJN72AO/view?queryScope=userFolders" target="_blank" rel="noopener">Open the Salesforce report</a></div>
-      <div class="calc">
-        <div class="inputs">
-          <div class="field"><label class="label" for="pGoal">Annual sales goal ($)</label><input id="pGoal" inputmode="numeric"></div>
-          <div class="field"><label class="label" for="pWon">Closed won so far this year ($)</label><input id="pWon" inputmode="numeric" placeholder="From the Closed Won report"></div>
-          <div class="field"><label class="label" for="pPipe">Current open pipeline ($)</label><input id="pPipe" inputmode="numeric" placeholder="Total from the Salesforce report"></div>
-          <div class="field"><label class="label" for="pClose">Close rate (%)</label><input id="pClose" inputmode="numeric"></div>
-          <div class="field"><label class="label" for="pCycle">Sales cycle (days)</label><input id="pCycle" inputmode="numeric"></div>
-          <div class="field"><label class="label" for="pDeal">Average new deal ($)</label><input id="pDeal" inputmode="numeric" placeholder="Required"></div>
-          <div class="field"><label class="label" for="pM2o">Meetings that become pipeline (%)</label><input id="pM2o" inputmode="numeric"></div>
-          <div class="field"><label class="label" for="pA2m">Accounts worked that book a meeting (%)</label><input id="pA2m" inputmode="numeric"></div>
-          <div class="field"><label class="label" for="pLowW">Slow-month close volume (% of normal)</label><input id="pLowW" inputmode="numeric"></div>
-          <div class="field full"><span class="label">Slow closing months</span><div class="months" id="pLow"></div></div>
-        </div>
-        <div class="result" id="calcOut"></div>
-      </div>
-      <div id="calcTable" style="margin-top:16px"></div>
-    </div>
-    <div class="next"><button class="btn" data-go="4">Back to the weekly plan</button></div>
-  </section>
+
 </main>
 <div id="drawerHost"></div>
 
@@ -516,9 +526,17 @@ const WIN={k12:{am:[450,510,"Before first bell"],pm:[930,1005,"After dismissal"]
 function minedFor(c){return(S.mined[c.key]||[]).map(m=>Object.assign({},m,{key:"m:"+c.key+":"+norm(m.first+m.last+m.title),isMined:true,co:c.key,tier:tierOf(m.title),score:clamp(tierOf(m.title)===1?62:tierOf(m.title)===2?52:35,0,100),why:["Found by contact research","Verify before outreach"]}))}
 function autoReason(c){const st=S.settings;if(!["k12","indep","higher"].includes(c.seg))return c.seg==="cte"?"CTE center (not K-12, independent or higher ed)":"Not a K-12, independent school or higher ed account";if(st.cust&&c.flag)return c.flag[1];if(c.drop)return c.drop+" (replaced)";if(st.recent&&c.touch!==null&&c.touch<=7&&!(c.lw&&c.lw.progress))return`Worked ${c.touch}d ago`;if(st.owner==="__none"&&c.owner)return"Has an owner";if(st.owner!=="all"&&st.owner!=="__none"&&c.owner!==st.owner)return"Different owner";if(!c.use.length)return"No usable contacts";return""}
 function eligible(){return S.companies.filter(c=>!autoReason(c)&&!S.excluded[c.key]).sort((a,b)=>b.score-a.score)}
-function build(){const st=S.settings;st.min=clamp(+st.min||3,1,MAXC);st.max=clamp(Math.max(+st.max||5,st.min),1,MAXC);if(st.perOverride)st.perOverride=clamp(st.perOverride,1,MAXPER);S.calc=calc();st.per=Math.min(MAXPER,st.perOverride||S.calc.rec);const el=eligible();const picks=el.slice(0,st.per*5);
+function build(){const st=S.settings;st.min=clamp(+st.min||3,1,MAXC);st.max=clamp(Math.max(+st.max||5,st.min),1,MAXC);if(st.perOverride)st.perOverride=clamp(st.perOverride,1,MAXPER);S.calc=calc();st.per=Math.min(MAXPER,st.perOverride||S.calc.rec);const el=eligible();const n=st.per*5;
+  /* stable slots: lay out the week as if nothing were skipped, then fill each skipped slot in place
+     with the best remaining account from the same segment (falls back to the best overall) */
+  const base=S.companies.filter(c=>!autoReason(c)).sort((a,b)=>b.score-a.score).slice(0,n);
+  const kept=new Set(base.filter(c=>!S.excluded[c.key]).map(c=>c.key));const pool=el.filter(c=>!kept.has(c.key));
+  const slots=base.map(c=>{if(!S.excluded[c.key])return c;let i=pool.findIndex(x=>x.seg===c.seg);if(i<0)i=0;const r=pool.splice(i,1)[0]||null;if(r)r.replaced=c.name;return r});
+  while(slots.length<n&&pool.length)slots.push(pool.shift());
+  S.companies.forEach(c=>{if(!slots.includes(c))delete c.replaced});
+  const picks=slots.filter(Boolean);
   const days=DOW.map((d,i)=>({i,date:addDays(st.week,i),accts:[]}));
-  picks.forEach((c,idx)=>{const day=days[Math.floor(idx/st.per)];const people=[...c.use.filter(p=>!p.dark&&!contactDone(c.key,p)),...minedFor(c)].filter(p=>p.tier!==0||c.use.length<3).sort((a,b)=>b.score-a.score);
+  slots.forEach((c,idx)=>{if(!c)return;const day=days[Math.floor(idx/st.per)];const people=[...c.use.filter(p=>!p.dark&&!contactDone(c.key,p)),...minedFor(c)].filter(p=>p.tier!==0||c.use.length<3).sort((a,b)=>b.score-a.score);
     const chosen=people.slice(0,st.max);const slots=[];
     for(const g of c.gaps){if(chosen.length+slots.length>=st.min)break;slots.push(`${g.g}: ${g.titles[0]}`)}
     if(chosen.length+slots.length<st.min)for(const t of TARGETS[c.seg]){if(chosen.length+slots.length>=st.min)break;if(!chosen.some(p=>norm(p.title)===norm(t))&&!slots.some(x=>x.includes(t)))slots.push(t)}
@@ -576,7 +594,7 @@ function paintMonths(){const st=S.settings;$("#pLow").innerHTML=MON.map((m,i)=>`
 /* ---------- step 3: review ---------- */
 const REASONS=["Open deal or renewal","Recently contacted","Not a fit","Under contract with a competitor","Asked not to be contacted","Bad or duplicate record","Swapped out of plan","Other"];
 function renderPicks(){const P=S.plan;if(!P)return;const el=$("#weekPicks");if(!el)return;
-  el.innerHTML=`<h3 style="margin-top:14px">Suggested accounts this week (${P.picks.length})</h3><p class="muted" style="font-size:13.5px;margin:2px 0 8px">Skip any account you shouldn't call. The next best account takes its place.</p>`+(P.days.some(d=>d.accts.length)?P.days.filter(d=>d.accts.length).map(d=>`<div style="margin-top:10px"><span class="label">${DOWL[d.i]} · ${esc(d.date)}</span><div class="clist">${d.accts.map(a=>{const c=a.c;return `<div class="crow" style="cursor:default"><div style="min-width:0"><div><span class="cn">${esc(c.name)}</span> ${segPill(c.seg)} <span class="muted" style="font-size:13px">score ${c.score} · ${a.people.length} contact${a.people.length===1?"":"s"}${a.slots.length?` + ${a.slots.length} to find`:""}</span></div><div class="cmeta">${esc([...new Set([c.city,c.st].filter(Boolean))].join(", "))}${c.why.length?" · "+esc(c.why.slice(0,4).join(" · ")):""}</div></div><button class="btn sm" data-skip="${esc(c.key)}">Skip and replace</button></div>`}).join("")}</div></div>`).join(""):`<div class="empty">No accounts to schedule. Upload the contact list in Step 1.</div>`);
+  el.innerHTML=`<h3 style="margin-top:14px">Suggested accounts this week (${P.picks.length})</h3><p class="muted" style="font-size:13.5px;margin:2px 0 8px">Skip any account you shouldn't call. The best remaining account in the same segment takes its spot on the same day.</p>`+(P.days.some(d=>d.accts.length)?P.days.filter(d=>d.accts.length).map(d=>`<div style="margin-top:10px"><span class="label">${DOWL[d.i]} · ${esc(d.date)}</span><div class="clist">${d.accts.map(a=>{const c=a.c;return `<div class="crow" style="cursor:default"><div style="min-width:0"><div><span class="cn">${esc(c.name)}</span> ${segPill(c.seg)}${c.replaced?` <span class="pill p-other">Replaces ${esc(c.replaced)}</span>`:""} <span class="muted" style="font-size:13px">score ${c.score} · ${a.people.length} contact${a.people.length===1?"":"s"}${a.slots.length?` + ${a.slots.length} to find`:""}</span></div><div class="cmeta">${esc([...new Set([c.city,c.st].filter(Boolean))].join(", "))}${c.why.length?" · "+esc(c.why.slice(0,4).join(" · ")):""}</div></div><button class="btn sm" data-skip="${esc(c.key)}">Skip and replace</button></div>`}).join("")}</div></div>`).join(""):`<div class="empty">No accounts to schedule. Upload the contact list in Step 1.</div>`);
   const sk=S.companies.filter(c=>S.excluded[c.key]);const so=$("#skipOut");
   so.innerHTML=sk.length?`<div class="card" style="margin-top:14px"><div class="shd"><span class="label">Skipped by you</span><h3>${sk.length} account${sk.length>1?"s":""}</h3></div><div class="clist">${sk.map(c=>`<div class="crow" style="cursor:default"><div style="min-width:0"><span class="cn">${esc(c.name)}</span> <span class="muted" style="font-size:13px">${esc(S.excluded[c.key])}</span></div><div style="display:flex;gap:6px;align-items:center"><select data-reason="${esc(c.key)}" aria-label="Reason">${REASONS.map(r=>`<option ${r===S.excluded[c.key]?"selected":""}>${r}</option>`).join("")}</select><button class="btn sm" data-unskip="${esc(c.key)}">Undo</button></div></div>`).join("")}</div></div>`:""}
 function renderReview(){const P=S.plan;if(!P)return;renderPicks();const dayOf=new Map();P.days.forEach(d=>d.accts.forEach(a=>dayOf.set(a.c.key,d.i)));
@@ -586,7 +604,7 @@ function renderReview(){const P=S.plan;if(!P)return;renderPicks();const dayOf=ne
   $("#revSummary").textContent=`${all.length} accounts uploaded · ${P.picks.length} scheduled this week (${S.settings.per} a day) · ${Math.max(0,P.eligible.length-P.picks.length)} waiting for next week · ${exN} excluded by you · ${autoN} left out by filters.`;
   $("#revTable").innerHTML=rows.length?`<div class="tblwrap" style="max-height:65vh"><table><thead><tr><th>Call?</th><th>Account</th><th>Segment</th><th>Score</th><th>Contacts</th><th>Status</th><th>Why</th><th>Exclude reason</th></tr></thead><tbody>${rows.slice(0,500).map(c=>{const ar=autoReason(c),ex=S.excluded[c.key];const d=dayOf.get(c.key);
     const status=ar?`<span class="muted">${esc(ar)}</span>`:ex?`<span style="color:var(--maroon);font-weight:600">Excluded</span>`:d!=null?`<b>${DOWL[d]}</b>`:`<span class="muted">Next week</span>`;
-    return `<tr class="${ex||ar?"ex":""}"><td><input type="checkbox" data-inc="${esc(c.key)}" ${!ex&&!ar?"checked":""} ${ar?"disabled":""} aria-label="Include ${esc(c.name)}" title="${ar?esc(ar)+" (change in Step 1 filters or the drop-off list above)":"Uncheck to exclude"}"></td><td><b>${esc(c.name)}</b><div class="muted" style="font-size:12px">${esc([c.city,c.st].filter(Boolean).join(", "))}</div></td><td>${segPill(c.seg)}</td><td class="num">${c.score}</td><td class="num">${c.cts.length}</td><td>${status}</td><td style="min-width:220px;font-size:13px">${esc(c.why.slice(0,4).join(" · "))}</td><td>${ex?`<select data-reason="${esc(c.key)}" aria-label="Reason">${REASONS.map(r=>`<option ${r===ex?"selected":""}>${r}</option>`).join("")}</select>`:""}</td></tr>`}).join("")}</tbody></table></div>`:`<div class="empty">No accounts match.</div>`}
+    return `<tr class="${ex||ar?"ex":""}"><td><input type="checkbox" data-inc="${esc(c.key)}" ${!ex&&!ar?"checked":""} ${ar?"disabled":""} aria-label="Include ${esc(c.name)}" title="${ar?esc(ar)+" (change in Step 2 filters or the drop-off list above)":"Uncheck to exclude"}"></td><td><b>${esc(c.name)}</b><div class="muted" style="font-size:12px">${esc([c.city,c.st].filter(Boolean).join(", "))}</div></td><td>${segPill(c.seg)}</td><td class="num">${c.score}</td><td class="num">${c.cts.length}</td><td>${status}</td><td style="min-width:220px;font-size:13px">${esc(c.why.slice(0,4).join(" · "))}</td><td>${ex?`<select data-reason="${esc(c.key)}" aria-label="Reason">${REASONS.map(r=>`<option ${r===ex?"selected":""}>${r}</option>`).join("")}</select>`:""}</td></tr>`}).join("")}</tbody></table></div>`:`<div class="empty">No accounts match.</div>`}
 document.addEventListener("input",e=>{if(e.target.id==="revQ"){S.q=e.target.value;renderReview()}});
 document.addEventListener("change",e=>{const t=e.target;if(t.dataset.inc){if(t.checked)delete S.excluded[t.dataset.inc];else S.excluded[t.dataset.inc]="Not a fit";persist();build();toast(t.checked?"Back in the plan":"Excluded. Pick a reason if you like.")}if(t.dataset.reason){S.excluded[t.dataset.reason]=t.value;persist()}});
 function goStep(n){S.step=n;[1,2,3,4,5].forEach(i=>{$("#step"+i).hidden=i!==n});document.querySelectorAll(".stp").forEach(b=>{const i=+b.dataset.go;if(i===n)b.setAttribute("aria-current","step");else b.removeAttribute("aria-current");b.classList.toggle("done",i<n)});render();window.scrollTo({top:0,behavior:"instant"})}
@@ -655,7 +673,7 @@ const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
 /* ---------- render ---------- */
 function segPill(s){return `<span class="pill p-${s}">${SEG[s]}</span>`}
 function tierPill(t){return `<span class="pill t${t||3}">${TIERL[t]}</span>`}
-function render(){if(S.step===5)renderCalc();else if(S.step===3){renderAct();renderReview()}else if(S.step===4)render4()}
+function render(){if(S.step===1)renderCalc();else if(S.step===4){renderAct();renderReview()}else if(S.step===5)render4()}
 function render4(){const P=S.plan;const st=S.settings;
   const nAcc=P.days.reduce((a,d)=>a+d.accts.length,0),nPpl=P.days.reduce((a,d)=>a+d.items.filter(i=>i.p).length,0),nSlots=P.days.reduce((a,d)=>a+d.items.filter(i=>!i.p).length,0);
   $("#strip").innerHTML=`<div><span class="n">${nAcc}</span><span class="k">accounts this week</span></div><div><span class="n">${nPpl}</span><span class="k">contacts</span></div><div><span class="n">${nPpl*4}</span><span class="k">touches (2 calls, VM, email)</span></div>${nSlots?`<div><span class="n" style="color:var(--warn)">${nSlots}</span><span class="k">open contact slots to research</span></div>`:""}<div><span class="n">${(+S.settings.acts||0)*5}</span><span class="k">client outreach &amp; renewal activities</span></div><div><span class="n">${P.eligible.length}</span><span class="k">eligible in segment</span></div>`;
@@ -720,7 +738,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("button,[data-ope
   if(t.dataset.gs){S.gapScope=t.dataset.gs;render();return}
   if(t.dataset.copytext){copyText($("#"+t.dataset.copytext).textContent,t);return}
   if(t.dataset.copydoc){copyText($("#doc-"+t.dataset.copydoc).textContent,t);return}
-  if(t.dataset.skip){S.excluded[t.dataset.skip]="Swapped out of plan";persist();build();toast("Skipped. The next account took its place.");return}
+  if(t.dataset.skip){S.excluded[t.dataset.skip]="Swapped out of plan";persist();build();toast("Skipped. A same-segment account took its place.");return}
   if(t.dataset.unskip){delete S.excluded[t.dataset.unskip];persist();build();toast("Back in the running");return}
   if(t.dataset.go){goStep(+t.dataset.go);return}
   if(t.dataset.rf){S.rf=t.dataset.rf;document.querySelectorAll("#revF button").forEach(b=>b.setAttribute("aria-pressed",b===t));renderReview();return}
@@ -810,6 +828,31 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-keep]");if
 function setupActDrop(){const drop=$("#dropAct"),inp=$("#fileAct");if(!drop)return;inp.onchange=()=>{loadAct(inp.files[0]);inp.value=""};
   ["dragenter","dragover"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add("over")}));["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove("over")}));
   drop.addEventListener("drop",e=>loadAct(e.dataTransfer.files[0]))}
+
+
+/* ---------- pipeline report (Salesforce) ---------- */
+function readPipe(buf,name){const isCsv=/\.(csv|txt)$/i.test(name||"");const wb=isCsv?XLSX.read(new TextDecoder("utf-8").decode(buf).replace(/^﻿/,""),{type:"string",cellDates:true}):XLSX.read(buf,{type:"array",cellDates:true});
+  const g=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,defval:"",raw:true});
+  const hi=g.slice(0,25).findIndex(r=>{const H=r.map(norm);return H.some(h=>h==="stage"||h.endsWith(" stage"))&&H.some(h=>/amount/.test(h))});if(hi<0)return null;
+  const H=g[hi].map(norm);const col=(...al)=>{for(const a of al){const i=H.findIndex(h=>h===a);if(i>=0)return i}for(const a of al){const i=H.findIndex(h=>h.includes(a));if(i>=0)return i}return -1};
+  const cS=col("stage"),cA=col("amount"),cD=col("close date","close month"),cO=col("opportunity owner","owner"),cN=col("opportunity name","account name");
+  const rows=g.slice(hi+1).filter(r=>r[cS]!==""&&r[cS]!=null&&!/^(total|subtotal|grand total|count)/i.test(String(r[0])+String(r[cN]||"")));return{rows,cS,cA,cD,cO}}
+async function loadPipe(file){if(!file)return;if(typeof XLSX==="undefined"){toast("The spreadsheet reader didn't load. Refresh and try again.");return}
+  try{const R=readPipe(await file.arrayBuffer(),file.name);if(!R||!R.rows.length){toast("Couldn't find Stage and Amount columns in that report.");return}
+    const st=S.settings;const me=norm(st.ae||"");const y=new Date().getFullYear();
+    const owners=R.cO>=0?[...new Set(R.rows.map(r=>norm(r[R.cO])).filter(Boolean))]:[];const mine=me&&owners.length>1?R.rows.filter(r=>norm(r[R.cO]).includes(me)):R.rows;
+    const amt=r=>num(r[R.cA]);const stg=r=>String(r[R.cS]);const yr=r=>{const d=R.cD>=0?actDate(r[R.cD]):null;return d?d.getFullYear():null};
+    const won=mine.filter(r=>/closed\s*won|^won$/i.test(stg(r))&&(yr(r)===y||yr(r)===null));const open=mine.filter(r=>!/closed|^won$|^lost$/i.test(stg(r)));
+    const wonAmt=won.reduce((t,r)=>t+amt(r),0),openAmt=open.reduce((t,r)=>t+amt(r),0);const sized=(won.length?won:open).map(amt).filter(x=>x>0);const avg=sized.length?Math.round(sized.reduce((a,b)=>a+b,0)/sized.length):0;
+    st.won=Math.round(wonAmt);st.pipe=Math.round(openAmt);if(avg)st.deal=avg;store.set("settings",st);
+    $("#pWon").value=st.won.toLocaleString("en-US");$("#pPipe").value=st.pipe.toLocaleString("en-US");if(avg)$("#pDeal").value=avg.toLocaleString("en-US");
+    $("#pipePill").textContent="Loaded";$("#pipePill").className="pill p-indep";$("#dropPipe").classList.add("loaded");
+    $("#pipeStat").innerHTML=`<b>${esc(file.name)}</b> · ${mine.length} opportunities${me&&owners.length>1?` owned by ${esc(st.ae)}`:""} · ${won.length} closed won in ${y} (${money(wonAmt)}) · ${open.length} open (${money(openAmt)}) · average deal ${avg?money(avg):"not found"}`;
+    build();renderCalc();toast("Pipeline numbers updated from the report")}
+  catch(e){toast("Couldn't read that report. Export it as .xlsx or .csv and try again.")}}
+function setupPipeDrop(){const drop=$("#dropPipe"),inp=$("#filePipe");if(!drop)return;inp.onchange=()=>{loadPipe(inp.files[0]);inp.value=""};
+  ["dragenter","dragover"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add("over")}));["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove("over")}));
+  drop.addEventListener("drop",e=>loadPipe(e.dataTransfer.files[0]))}
 
 /* ---------- uploads ---------- */
 function setupDrop(){const drop=$("#dropCt"),inp=$("#fileCt");
@@ -936,7 +979,7 @@ function loadSample(){let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/21
 
 /* ---------- init ---------- */
 {const st=S.settings;if((st.cfgv||0)<2){st.min=Math.max(3,+st.min||3);st.max=5;if(st.perOverride>5)st.perOverride=5;if(st.acts==null)st.acts=10;st.cfgv=2;store.set("settings",st)}}
-bindSettings();setupDrop();setupActDrop();
+bindSettings();setupDrop();setupActDrop();setupPipeDrop();
 if(typeof Papa==="undefined"){document.querySelector("#step2").insertAdjacentHTML("afterbegin",`<div class="banner">The CSV reader didn't load. Check your connection and refresh.</div>`)}
 S.mined={};S.excluded={};
 paintMonths();loadSample();goStep(1);detectEngine();
