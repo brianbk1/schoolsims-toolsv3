@@ -170,7 +170,7 @@ tr:last-child td{border-bottom:0}
 .frow a{color:var(--peri);font-size:13px;overflow-wrap:anywhere}
 
 /* stepper + steps */
-.stepper{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:18px}
+.stepper{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:18px}
 .stp{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 10px;text-align:left;font-weight:600;font-size:14px;min-width:0}
 .stp i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--sunk);color:var(--muted);font:700 13px/1 var(--f-display);flex:none}
 .stp span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -251,54 +251,26 @@ tr.ex td:first-child,tr.ex td:last-child{opacity:1}
 <main class="wrap">
   <section class="card welcome">
     <div><span class="label">For Janet</span><h1>Plan your outbound week</h1>
-    <p class="muted">About 10 minutes each Monday. Work through the four steps in order; your settings and exclusions stay in this browser for next time.</p></div>
+    <p class="muted">About 10 minutes each Monday. Work through steps 1 to 4 in order; your settings and exclusions stay in this browser for next time.</p></div>
     <ol>
-      <li><b>Pipeline target.</b> Enter what you have closed this year and your open pipeline. You'll get how many companies to work each day.</li>
-      <li><b>HubSpot export.</b> Open the SchoolSims contact list in HubSpot, export it to CSV, and upload the file here.</li>
-      <li><b>Review accounts.</b> Uncheck anything you shouldn't call, like an account in a renewal conversation.</li>
+      <li><b>Contact list.</b> Export the SchoolSims contact list from HubSpot and upload it.</li>
+      <li><b>Last week's updates.</b> Run the Breeze prompt in HubSpot and upload the spreadsheet it gives you.</li>
+      <li><b>Review accounts.</b> See what dropped off and why, and uncheck anything you shouldn't call.</li>
       <li><b>Weekly plan.</b> Follow the day's schedule, tap a contact for scripts, and download the .xlsx.</li>
+      <li><b>Pipeline target</b> (once a month). Update closed won and open pipeline; it sets companies per day, up to 5.</li>
     </ol>
   </section>
   <nav class="stepper" aria-label="Steps">
-    <button class="stp" data-go="1"><i>1</i><span>Pipeline target</span></button>
-    <button class="stp" data-go="2"><i>2</i><span>HubSpot export</span></button>
+    <button class="stp" data-go="1"><i>1</i><span>Contact list</span></button>
+    <button class="stp" data-go="2"><i>2</i><span>Last week's updates</span></button>
     <button class="stp" data-go="3"><i>3</i><span>Review accounts</span></button>
     <button class="stp" data-go="4"><i>4</i><span>Weekly plan</span></button>
+    <button class="stp" data-go="5"><i>5</i><span>Pipeline target</span></button>
   </nav>
 
   <section id="step1" class="stepview">
     <div class="card">
-      <div class="shd"><span class="label">Step 1</span><h2>How much outbound do you need?</h2></div>
-      <p class="muted" style="max-width:70ch">Enter your goal, what you have already closed this year, and your current open pipeline. Closed-won deals come off the goal first, then the planner works back through close rate, a 90-day cycle and slow months to set how many companies to work each day.</p>
-      <div class="srcbox"><div><b>Where to find these numbers:</b> open your pipeline report in Salesforce. Use its total for <b>Current open pipeline</b>, and its deal amounts to set <b>Average new deal</b>. For <b>Closed won so far this year</b>, filter the same report to Closed Won with a close date this calendar year.</div><a class="btn primary sm" href="https://edleadershipsims.lightning.force.com/lightning/r/Report/00OPQ000005YJN72AO/view?queryScope=userFolders" target="_blank" rel="noopener">Open the Salesforce report</a></div>
-      <div class="calc">
-        <div class="inputs">
-          <div class="field"><label class="label" for="pGoal">Annual sales goal ($)</label><input id="pGoal" inputmode="numeric"></div>
-          <div class="field"><label class="label" for="pWon">Closed won so far this year ($)</label><input id="pWon" inputmode="numeric" placeholder="From the Closed Won report"></div>
-          <div class="field"><label class="label" for="pPipe">Current open pipeline ($)</label><input id="pPipe" inputmode="numeric" placeholder="Total from the Salesforce report"></div>
-          <div class="field"><label class="label" for="pClose">Close rate (%)</label><input id="pClose" inputmode="numeric"></div>
-          <div class="field"><label class="label" for="pCycle">Sales cycle (days)</label><input id="pCycle" inputmode="numeric"></div>
-          <div class="field"><label class="label" for="pDeal">Average new deal ($)</label><input id="pDeal" inputmode="numeric" placeholder="Required"></div>
-          <div class="field"><label class="label" for="pM2o">Meetings that become pipeline (%)</label><input id="pM2o" inputmode="numeric"></div>
-          <div class="field"><label class="label" for="pA2m">Accounts worked that book a meeting (%)</label><input id="pA2m" inputmode="numeric"></div>
-          <div class="field"><label class="label" for="pLowW">Slow-month close volume (% of normal)</label><input id="pLowW" inputmode="numeric"></div>
-          <div class="field full"><span class="label">Slow closing months</span><div class="months" id="pLow"></div></div>
-          <div class="field"><label class="label" for="sAe">Your name</label><input id="sAe" placeholder="Janet"></div>
-          <div class="field"><label class="label" for="sPhone">Your phone (for voicemails)</label><input id="sPhone" placeholder="610-555-0100"></div>
-          <div class="field"><label class="label" for="sTz">Your time zone</label><select id="sTz"></select></div>
-          <div class="field"><label class="label" for="sWeek">Plan week starting (Monday)</label><input id="sWeek" type="date"></div>
-          <div class="field"><label class="label" for="sActs">Client outreach &amp; renewal activities a day this week</label><input id="sActs" type="number" min="0" max="60" inputmode="numeric" placeholder="e.g. 10"></div>
-        </div>
-        <div class="result" id="calcOut"></div>
-      </div>
-      <div id="calcTable" style="margin-top:16px"></div>
-    </div>
-    <div class="next"><button class="btn primary" data-go="2">Next: pull accounts from HubSpot</button></div>
-  </section>
-
-  <section id="step2" class="stepview" hidden>
-    <div class="card">
-      <div class="shd"><span class="label">Step 2</span><h2>Download the contact list from HubSpot</h2></div>
+      <div class="shd"><span class="label">Step 1</span><h2>Import the contact list from HubSpot</h2></div>
       <ol class="howto">
         <li><b>Open the list in HubSpot.</b> Log in if it asks.
           <div class="urlrow"><a class="btn primary sm" href="https://app.hubspot.com/contacts/5514837/objectLists/13913/filters" target="_blank" rel="noopener">Open the HubSpot list</a><code id="hsUrl">https://app.hubspot.com/contacts/5514837/objectLists/13913/filters</code><button class="btn sm" data-copytext="hsUrl">Copy link</button></div></li>
@@ -310,18 +282,45 @@ tr.ex td:first-child,tr.ex td:last-child{opacity:1}
       <div class="uploads" style="margin-top:12px">
         <label class="drop big" id="dropCt"><input type="file" id="fileCt" accept=".csv,text/csv"><svg class="upico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0-5 5m5-5 5 5M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="top"><h3>Upload the contact list CSV</h3><span class="pill p-other" id="ctPill">Needed</span></div><p class="stat muted" id="ctStat">Drag the HubSpot export here, or click the button.</p><span class="btn primary pick">Choose CSV file</span></label>
       </div>
+
       <div class="settings">
+        <div class="field"><label class="label" for="sAe">Your name</label><input id="sAe" placeholder="Janet"></div>
+        <div class="field"><label class="label" for="sPhone">Your phone (for voicemails)</label><input id="sPhone" placeholder="610-555-0100"></div>
+        <div class="field"><label class="label" for="sTz">Your time zone</label><select id="sTz"></select></div>
+        <div class="field"><label class="label" for="sWeek">Plan week starting (Monday)</label><input id="sWeek" type="date"></div>
+        <div class="field"><label class="label" for="sActs">Client outreach &amp; renewal activities a day this week</label><input id="sActs" type="number" min="0" max="60" inputmode="numeric" placeholder="e.g. 10"></div>
         <div class="field"><label class="label" for="sMin">Contacts per company</label><div style="display:flex;gap:6px;align-items:center"><input id="sMin" type="number" min="1" max="5"><span class="muted">to</span><input id="sMax" type="number" min="1" max="5"></div></div>
         <div class="field"><label class="label" for="sOwner">Company owner</label><select id="sOwner"></select></div>
-        <div class="field" style="align-content:end"><label class="check"><input type="checkbox" id="sCust"> Leave out current clients and open opportunities</label><label class="check"><input type="checkbox" id="sRecent"> Leave out accounts worked in the last 7 days</label></div>
+        <div class="field" style="align-content:end"><label class="check"><input type="checkbox" id="sCust"> Leave out current clients and open opportunities</label><label class="check"><input type="checkbox" id="sRecent"> Leave out accounts worked in the last 7 days</label><label class="check"><input type="checkbox" id="sDrop"> Flag accounts to keep or replace when they say not interested, or after <input id="sMaxAtt" type="number" min="2" max="12" style="width:56px;padding:2px 6px"> weeks of outreach to a contact with no response (from Breeze)</label></div>
       </div>
     </div>
+    <div class="next"><button class="btn primary" data-go="2">Next: import last week's updates</button></div>
+  </section>
+
+  <section id="step2" class="stepview" hidden>
+    <div class="card">
+        <div class="shd"><span class="label">Step 2</span><h2>Import last week's updates from Breeze</h2></div>
+        <p class="muted" style="max-width:76ch">This shows the progress made on accounts last week. Accounts with a reply or a connected call move up for follow-up. Each contact gets 4 weeks of effort (set below; any week with an email or call to them counts). After that, a contact with no reply or connected call drops out of the call plan, while the rest of the account keeps going. A whole account drops only when it says it is not interested or every contact is done. After each import you'll see what is dropping off and why, and you can keep anything. Upload it every week so the weeks are counted.</p>
+        <ol class="howto">
+          <li><b>Open Breeze in HubSpot</b> (the Breeze assistant at the top of HubSpot).
+            <div class="urlrow"><a class="btn primary sm" href="https://app.hubspot.com/contacts/5514837" target="_blank" rel="noopener">Open HubSpot</a></div></li>
+          <li><b>Copy this prompt and paste it into Breeze.</b>
+            <div class="prompt" style="margin-top:8px"><div class="hd"><span class="label">Breeze prompt</span><button class="btn sm" data-copytext="breezePrompt">Copy prompt</button></div><pre id="breezePrompt">Create a detailed activity review for Janet Jaramillo for the previous Monday–Sunday, using Eastern time. Include sent and incoming email text, recorded reply counts, call outcomes, written call notes, and links to each activity. Provide a downloadable spreadsheet. Mark missing reply information as “Reply tracking unavailable,” not “not responded to.”</pre></div></li>
+          <li><b>Download the spreadsheet Breeze gives you</b> and upload it here.</li>
+        </ol>
+        <div class="uploads" style="margin-top:12px">
+          <label class="drop" id="dropAct"><input type="file" id="fileAct" accept=".xlsx,.xls,.csv"><div class="top"><h3>Upload last week's activity</h3><span class="pill p-other" id="actPill">Optional</span></div><p class="stat muted" id="actStat">The .xlsx or .csv from Breeze.</p></label>
+        </div>
+        <div id="actOut"></div>
+      </div>
     <div class="next"><button class="btn" data-go="1">Back</button><button class="btn primary" data-go="3">Next: review accounts</button></div>
   </section>
 
+
   <section id="step3" class="stepview" hidden>
     <div class="card">
-      <div class="shd"><span class="label">Step 3</span><h2>Review accounts and exclude any you shouldn't call</h2></div>
+      <div class="shd"><span class="label">Step 3</span><h2>Review accounts: exclude any you shouldn't call</h2></div>
+      <div id="dropOut"></div>
       <p class="muted" id="revSummary" style="margin-top:4px"></p>
       <div class="revtools"><input id="revQ" type="search" placeholder="Search accounts" aria-label="Search accounts"><div class="seg sm" role="group" id="revF"><button data-rf="all" aria-pressed="true">All</button><button data-rf="plan" aria-pressed="false">In this week</button><button data-rf="ex" aria-pressed="false">Excluded</button></div></div>
       <div id="revTable"></div>
@@ -337,6 +336,31 @@ tr.ex td:first-child,tr.ex td:last-child{opacity:1}
       <button class="tab" role="tab" data-tab="scripts" aria-selected="false">Scripts & cadence</button>
     </nav>
     <section class="panel" id="panel"></section>
+  </section>
+
+  <section id="step5" class="stepview" hidden>
+    <div class="card">
+      <div class="shd"><span class="label">Step 5 · update monthly</span><h2>Pipeline target: how much outbound do you need?</h2></div>
+      <p class="muted" style="max-width:70ch">Enter your goal, what you have already closed this year, and your current open pipeline. Closed-won deals come off the goal first, then the planner works back through close rate, a 90-day cycle and slow months to set how many companies to work each day.</p>
+      <div class="srcbox"><div><b>Where to find these numbers:</b> open your pipeline report in Salesforce. Use its total for <b>Current open pipeline</b>, and its deal amounts to set <b>Average new deal</b>. For <b>Closed won so far this year</b>, filter the same report to Closed Won with a close date this calendar year.</div><a class="btn primary sm" href="https://edleadershipsims.lightning.force.com/lightning/r/Report/00OPQ000005YJN72AO/view?queryScope=userFolders" target="_blank" rel="noopener">Open the Salesforce report</a></div>
+      <div class="calc">
+        <div class="inputs">
+          <div class="field"><label class="label" for="pGoal">Annual sales goal ($)</label><input id="pGoal" inputmode="numeric"></div>
+          <div class="field"><label class="label" for="pWon">Closed won so far this year ($)</label><input id="pWon" inputmode="numeric" placeholder="From the Closed Won report"></div>
+          <div class="field"><label class="label" for="pPipe">Current open pipeline ($)</label><input id="pPipe" inputmode="numeric" placeholder="Total from the Salesforce report"></div>
+          <div class="field"><label class="label" for="pClose">Close rate (%)</label><input id="pClose" inputmode="numeric"></div>
+          <div class="field"><label class="label" for="pCycle">Sales cycle (days)</label><input id="pCycle" inputmode="numeric"></div>
+          <div class="field"><label class="label" for="pDeal">Average new deal ($)</label><input id="pDeal" inputmode="numeric" placeholder="Required"></div>
+          <div class="field"><label class="label" for="pM2o">Meetings that become pipeline (%)</label><input id="pM2o" inputmode="numeric"></div>
+          <div class="field"><label class="label" for="pA2m">Accounts worked that book a meeting (%)</label><input id="pA2m" inputmode="numeric"></div>
+          <div class="field"><label class="label" for="pLowW">Slow-month close volume (% of normal)</label><input id="pLowW" inputmode="numeric"></div>
+          <div class="field full"><span class="label">Slow closing months</span><div class="months" id="pLow"></div></div>
+        </div>
+        <div class="result" id="calcOut"></div>
+      </div>
+      <div id="calcTable" style="margin-top:16px"></div>
+    </div>
+    <div class="next"><button class="btn" data-go="4">Back to the weekly plan</button></div>
   </section>
 </main>
 <div id="drawerHost"></div>
@@ -423,8 +447,8 @@ function areaTz(ph){const d=String(ph||"").replace(/\D/g,"").replace(/^1(?=\d{10
 const FREE_MAIL=/^(gmail|yahoo|hotmail|outlook|aol|icloud|comcast|msn|live|me)\./;
 
 /* ---------- state ---------- */
-const S={companies:[],contacts:[],sample:true,ctFile:null,ctCols:{},mined:store.get("mined",{}),excluded:store.get("excluded",{}),
-  settings:Object.assign({ae:"Janet",phone:"",tz:"America/New_York",week:nextMonday(),per:5,min:3,max:5,acts:10,owner:"all",cust:true,recent:true,
+const S={companies:[],contacts:[],sample:true,ctFile:null,ctCols:{},mined:store.get("mined",{}),actHist:store.get("actHist",{}),actKeep:store.get("actKeep",{}),actKeepC:store.get("actKeepC",{}),excluded:store.get("excluded",{}),
+  settings:Object.assign({ae:"Janet",phone:"",tz:"America/New_York",week:nextMonday(),per:5,min:3,max:5,acts:10,maxAtt:4,owner:"all",cust:true,recent:true,
     goal:350000,won:"",pipe:0,close:40,cycle:90,deal:0,m2o:60,a2m:10,lowW:25,low:[11,6,7],perOverride:null},store.get("settings",{})),
   step:1,tab:"plan",day:0,plan:null,engine:"roles",finding:false,rf:"all",q:"",gapScope:"week"};
 if(S.settings.week<nextMonday())S.settings.week=nextMonday();
@@ -458,6 +482,7 @@ function scoreCompany(c){let s=0;const why=[];const cts=c.cts,use=cts.filter(p=>
   const la=cts.map(p=>p.laDays).filter(x=>x!==null);c.touch=la.length?Math.min(...la):null;
   if(c.touch!==null&&c.touch<=21&&c.touch>7)s-=8;else if(c.touch===null||c.touch>180){s+=6;why.push(c.touch===null?"Never worked":`No sales touch in ${c.touch}d`)}
   if(use.length&&use.filter(p=>p.dark).length/use.length>.5){s-=8;why.push("Most contacts marked Not interested")}
+  c.drop=dropReason(c);if(!c.drop&&S.actHist[c.key]){const cs=contactStats(c);if(cs.done)why.unshift(`${cs.done} contact${cs.done>1?"s":""} done after ${maxAtt()} weeks`)}const lw=S.act&&S.act[c.key];c.lw=lw||null;if(lw||S.actHist[c.key]){const i=why.indexOf("Never worked");if(i>=0)why.splice(i,1)}if(c.drop)why.unshift(c.drop);else if(lw){if(lw.progress&&!lw.ni){s+=12;why.unshift(`Last week: ${lw.status.toLowerCase()}, follow up`)}else{const d=daysSince(lw.last);if(d!==null&&(c.touch===null||d<c.touch))c.touch=d;why.unshift(`Last week: ${lw.status.toLowerCase()}`)}}
   if(c.intl){s-=15;why.push(`International (${c.country})`)}
   c.score=clamp(Math.round(s*1.25),0,100);c.why=why;return c}
 function companyFlag(c){const ls=c.cts.map(p=>norm(p.leadStatus));
@@ -486,11 +511,11 @@ function ingest(){const by=new Map();
 /* ---------- plan ---------- */
 const WIN={k12:{am:[450,510,"Before first bell"],pm:[930,1005,"After dismissal"]},cte:{am:[450,510,"Before first bell"],pm:[930,1005,"After dismissal"]},indep:{am:[465,510,"Before first period"],pm:[930,1005,"After last period"]},higher:{am:[570,660,"Mid-morning, before class blocks"],pm:[840,960,"Afternoon office hours"]},other:{am:[540,600,"Mid-morning"],pm:[840,900,"Mid-afternoon"]}};
 function minedFor(c){return(S.mined[c.key]||[]).map(m=>Object.assign({},m,{key:"m:"+c.key+":"+norm(m.first+m.last+m.title),isMined:true,co:c.key,tier:tierOf(m.title),score:clamp(tierOf(m.title)===1?62:tierOf(m.title)===2?52:35,0,100),why:["Found by contact research","Verify before outreach"]}))}
-function autoReason(c){const st=S.settings;if(!["k12","indep","higher"].includes(c.seg))return c.seg==="cte"?"CTE center (not K-12, independent or higher ed)":"Not a K-12, independent school or higher ed account";if(st.cust&&c.flag)return c.flag[1];if(st.recent&&c.touch!==null&&c.touch<=7)return`Worked ${c.touch}d ago`;if(st.owner==="__none"&&c.owner)return"Has an owner";if(st.owner!=="all"&&st.owner!=="__none"&&c.owner!==st.owner)return"Different owner";if(!c.use.length)return"No usable contacts";return""}
+function autoReason(c){const st=S.settings;if(!["k12","indep","higher"].includes(c.seg))return c.seg==="cte"?"CTE center (not K-12, independent or higher ed)":"Not a K-12, independent school or higher ed account";if(st.cust&&c.flag)return c.flag[1];if(c.drop)return c.drop+" (replaced)";if(st.recent&&c.touch!==null&&c.touch<=7&&!(c.lw&&c.lw.progress))return`Worked ${c.touch}d ago`;if(st.owner==="__none"&&c.owner)return"Has an owner";if(st.owner!=="all"&&st.owner!=="__none"&&c.owner!==st.owner)return"Different owner";if(!c.use.length)return"No usable contacts";return""}
 function eligible(){return S.companies.filter(c=>!autoReason(c)&&!S.excluded[c.key]).sort((a,b)=>b.score-a.score)}
 function build(){const st=S.settings;st.min=clamp(+st.min||3,1,MAXC);st.max=clamp(Math.max(+st.max||5,st.min),1,MAXC);if(st.perOverride)st.perOverride=clamp(st.perOverride,1,MAXPER);S.calc=calc();st.per=Math.min(MAXPER,st.perOverride||S.calc.rec);const el=eligible();const picks=el.slice(0,st.per*5);
   const days=DOW.map((d,i)=>({i,date:addDays(st.week,i),accts:[]}));
-  picks.forEach((c,idx)=>{const day=days[Math.floor(idx/st.per)];const people=[...c.use.filter(p=>!p.dark),...minedFor(c)].filter(p=>p.tier!==0||c.use.length<3).sort((a,b)=>b.score-a.score);
+  picks.forEach((c,idx)=>{const day=days[Math.floor(idx/st.per)];const people=[...c.use.filter(p=>!p.dark&&!contactDone(c.key,p)),...minedFor(c)].filter(p=>p.tier!==0||c.use.length<3).sort((a,b)=>b.score-a.score);
     const chosen=people.slice(0,st.max);const slots=[];
     for(const g of c.gaps){if(chosen.length+slots.length>=st.min)break;slots.push(`${g.g}: ${g.titles[0]}`)}
     if(chosen.length+slots.length<st.min)for(const t of TARGETS[c.seg]){if(chosen.length+slots.length>=st.min)break;if(!chosen.some(p=>norm(p.title)===norm(t))&&!slots.some(x=>x.includes(t)))slots.push(t)}
@@ -554,10 +579,10 @@ function renderReview(){const P=S.plan;if(!P)return;const dayOf=new Map();P.days
   $("#revSummary").textContent=`${all.length} accounts uploaded · ${P.picks.length} scheduled this week (${S.settings.per} a day) · ${Math.max(0,P.eligible.length-P.picks.length)} waiting for next week · ${exN} excluded by you · ${autoN} left out by filters.`;
   $("#revTable").innerHTML=rows.length?`<div class="tblwrap" style="max-height:65vh"><table><thead><tr><th>Call?</th><th>Account</th><th>Segment</th><th>Score</th><th>Contacts</th><th>Status</th><th>Why</th><th>Exclude reason</th></tr></thead><tbody>${rows.slice(0,500).map(c=>{const ar=autoReason(c),ex=S.excluded[c.key];const d=dayOf.get(c.key);
     const status=ar?`<span class="muted">${esc(ar)}</span>`:ex?`<span style="color:var(--maroon);font-weight:600">Excluded</span>`:d!=null?`<b>${DOWL[d]}</b>`:`<span class="muted">Next week</span>`;
-    return `<tr class="${ex||ar?"ex":""}"><td><input type="checkbox" data-inc="${esc(c.key)}" ${!ex&&!ar?"checked":""} ${ar?"disabled":""} aria-label="Include ${esc(c.name)}" title="${ar?esc(ar)+" (change in Step 2 filters)":"Uncheck to exclude"}"></td><td><b>${esc(c.name)}</b><div class="muted" style="font-size:12px">${esc([c.city,c.st].filter(Boolean).join(", "))}</div></td><td>${segPill(c.seg)}</td><td class="num">${c.score}</td><td class="num">${c.cts.length}</td><td>${status}</td><td style="min-width:220px;font-size:13px">${esc(c.why.slice(0,4).join(" · "))}</td><td>${ex?`<select data-reason="${esc(c.key)}" aria-label="Reason">${REASONS.map(r=>`<option ${r===ex?"selected":""}>${r}</option>`).join("")}</select>`:""}</td></tr>`}).join("")}</tbody></table></div>`:`<div class="empty">No accounts match.</div>`}
+    return `<tr class="${ex||ar?"ex":""}"><td><input type="checkbox" data-inc="${esc(c.key)}" ${!ex&&!ar?"checked":""} ${ar?"disabled":""} aria-label="Include ${esc(c.name)}" title="${ar?esc(ar)+" (change in Step 1 filters or the drop-off list above)":"Uncheck to exclude"}"></td><td><b>${esc(c.name)}</b><div class="muted" style="font-size:12px">${esc([c.city,c.st].filter(Boolean).join(", "))}</div></td><td>${segPill(c.seg)}</td><td class="num">${c.score}</td><td class="num">${c.cts.length}</td><td>${status}</td><td style="min-width:220px;font-size:13px">${esc(c.why.slice(0,4).join(" · "))}</td><td>${ex?`<select data-reason="${esc(c.key)}" aria-label="Reason">${REASONS.map(r=>`<option ${r===ex?"selected":""}>${r}</option>`).join("")}</select>`:""}</td></tr>`}).join("")}</tbody></table></div>`:`<div class="empty">No accounts match.</div>`}
 document.addEventListener("input",e=>{if(e.target.id==="revQ"){S.q=e.target.value;renderReview()}});
 document.addEventListener("change",e=>{const t=e.target;if(t.dataset.inc){if(t.checked)delete S.excluded[t.dataset.inc];else S.excluded[t.dataset.inc]="Not a fit";persist();build();toast(t.checked?"Back in the plan":"Excluded. Pick a reason if you like.")}if(t.dataset.reason){S.excluded[t.dataset.reason]=t.value;persist()}});
-function goStep(n){S.step=n;[1,2,3,4].forEach(i=>{$("#step"+i).hidden=i!==n});document.querySelectorAll(".stp").forEach(b=>{const i=+b.dataset.go;if(i===n)b.setAttribute("aria-current","step");else b.removeAttribute("aria-current");b.classList.toggle("done",i<n)});render();window.scrollTo({top:0,behavior:"instant"})}
+function goStep(n){S.step=n;[1,2,3,4,5].forEach(i=>{$("#step"+i).hidden=i!==n});document.querySelectorAll(".stp").forEach(b=>{const i=+b.dataset.go;if(i===n)b.setAttribute("aria-current","step");else b.removeAttribute("aria-current");b.classList.toggle("done",i<n)});render();window.scrollTo({top:0,behavior:"instant"})}
 
 /* ---------- scripts ---------- */
 const COPY={
@@ -623,7 +648,7 @@ const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
 /* ---------- render ---------- */
 function segPill(s){return `<span class="pill p-${s}">${SEG[s]}</span>`}
 function tierPill(t){return `<span class="pill t${t||3}">${TIERL[t]}</span>`}
-function render(){if(S.step===1)renderCalc();else if(S.step===3)renderReview();else if(S.step===4)render4()}
+function render(){if(S.step===5)renderCalc();else if(S.step===3){renderAct();renderReview()}else if(S.step===4)render4()}
 function render4(){const P=S.plan;const st=S.settings;
   const nAcc=P.days.reduce((a,d)=>a+d.accts.length,0),nPpl=P.days.reduce((a,d)=>a+d.items.filter(i=>i.p).length,0),nSlots=P.days.reduce((a,d)=>a+d.items.filter(i=>!i.p).length,0);
   $("#strip").innerHTML=`<div><span class="n">${nAcc}</span><span class="k">accounts this week</span></div><div><span class="n">${nPpl}</span><span class="k">contacts</span></div><div><span class="n">${nPpl*4}</span><span class="k">touches (2 calls, VM, email)</span></div>${nSlots?`<div><span class="n" style="color:var(--warn)">${nSlots}</span><span class="k">open contact slots to research</span></div>`:""}<div><span class="n">${(+S.settings.acts||0)*5}</span><span class="k">client outreach &amp; renewal activities</span></div><div><span class="n">${P.eligible.length}</span><span class="k">eligible in segment</span></div>`;
@@ -702,8 +727,81 @@ document.addEventListener("change",e=>{if(e.target.id==="scSeg"){S.scriptSeg=e.t
 function bindSettings(){const st=S.settings;const f={sAe:"ae",sPhone:"phone",sTz:"tz",sWeek:"week",sMin:"min",sMax:"max",sActs:"acts",sOwner:"owner",pGoal:"goal",pWon:"won",pPipe:"pipe",pClose:"close",pCycle:"cycle",pDeal:"deal",pM2o:"m2o",pA2m:"a2m",pLowW:"lowW"};const NUMS=["goal","won","pipe","close","cycle","deal","m2o","a2m","lowW"];const MONEY=["goal","won","pipe","deal"];
   $("#sTz").innerHTML=AE_TZS.map(([v,l])=>`<option value="${v}">${l}</option>`).join("");
   for(const[id,k]of Object.entries(f)){const el=$("#"+id);el.value=k==="won"?(st.won===""||st.won==null?"":Number(st.won).toLocaleString("en-US")):MONEY.includes(k)?(+st[k]?Number(st[k]).toLocaleString("en-US"):""):st[k];el.addEventListener("change",()=>{let v=el.value;if(k==="won"&&!String(v).trim()){v=""}else if(NUMS.includes(k)){v=Math.max(0,num(v));if(MONEY.includes(k))el.value=v.toLocaleString("en-US");else el.value=v}if(["min","max"].includes(k))v=clamp(parseInt(v)||1,1,MAXC);if(k==="acts")v=clamp(parseInt(v)||0,0,60);if(k==="week"&&v){const d=new Date(v+"T12:00:00");const back=(d.getDay()+6)%7;d.setDate(d.getDate()-back);v=d.toISOString().slice(0,10);el.value=v}st[k]=v;if(st.min>st.max){st.max=st.min;$("#sMax").value=st.max}store.set("settings",st);build()})}
-  $("#sCust").checked=st.cust;$("#sRecent").checked=st.recent;
+  $("#sCust").checked=st.cust;$("#sRecent").checked=st.recent;$("#sDrop").checked=st.drop!==false;$("#sDrop").onchange=e=>{st.drop=e.target.checked;store.set("settings",st);if(S.act)Object.values(S.act).forEach(a=>a.drop=rawDrop(a.key));ingest();build();renderAct()};$("#sMaxAtt").value=maxAtt();$("#sMaxAtt").onchange=e=>{st.maxAtt=clamp(parseInt(e.target.value)||4,2,12);e.target.value=st.maxAtt;store.set("settings",st);if(S.act)Object.values(S.act).forEach(a=>a.drop=rawDrop(a.key));ingest();build();renderAct()};
   $("#sCust").onchange=e=>{st.cust=e.target.checked;store.set("settings",st);build()};$("#sRecent").onchange=e=>{st.recent=e.target.checked;store.set("settings",st);build()}}
+
+
+/* ---------- last week's activity (Breeze export) ---------- */
+const ACT_COL={company:["associated company","company name","company","account name","account"],contact:["contact name","associated contact","contact","recipient","name"],cemail:["contact email","recipient email","email address"],from:["from"],to:["to"],type:["activity type","engagement type","type","activity"],dir:["direction"],date:["activity date","date","timestamp","created","time"],outcome:["call outcome","outcome","disposition","call status","status"],replies:["reply count","replies","recorded reply","reply"],subject:["subject","title"],body:["email text","body","call notes","notes","note","text","content","description"],link:["link","url","record link","hubspot link"]};
+function actFind(hdr){const H=hdr.map(h=>norm(h));const out={},used=new Set();for(const[f,al]of Object.entries(ACT_COL)){let i=-1;for(const a of al){i=H.findIndex((h,j)=>!used.has(j)&&h===a);if(i>=0)break}if(i<0&&!["from","to"].includes(f))for(const a of al){i=H.findIndex((h,j)=>!used.has(j)&&h.includes(a));if(i>=0)break}if(i>=0){out[f]=i;used.add(i)}}return out}
+function actDate(v){if(v instanceof Date)return isNaN(v)?null:v;if(typeof v==="number"&&v>20000&&v<80000)return new Date(Math.round((v-25569)*864e5));return parseDate(v)}
+function readAct(buf,name){const isCsv=/\.(csv|txt)$/i.test(name||"");const wb=isCsv?XLSX.read(new TextDecoder("utf-8").decode(buf).replace(/^\uFEFF/,"").replace(/\u00a0/g," "),{type:"string",cellDates:true}):XLSX.read(buf,{type:"array",cellDates:true});const rows=[];
+  wb.SheetNames.forEach(sn=>{const g=XLSX.utils.sheet_to_json(wb.Sheets[sn],{header:1,defval:"",raw:true});
+    const hi=g.slice(0,15).findIndex(r=>{const c=actFind(r.map(String));return Object.keys(c).length>=3&&(c.type!=null||c.outcome!=null||c.subject!=null)});if(hi<0)return;
+    const c=actFind(g[hi].map(String));const sheetType=/call/i.test(sn)?"call":/email|mail/i.test(sn)?"email":/meet/i.test(sn)?"meeting":"";
+    g.slice(hi+1).forEach(r=>{const v=k=>c[k]!=null?r[c[k]]:"";const t=String(v("type")||sheetType);if(!r.some(x=>String(x).trim()))return;
+      const dirIn=/incoming|inbound|received/i.test(String(v("dir"))+" "+t);const ems=String(v("cemail")||(dirIn?v("from"):v("to"))).toLowerCase().split(/[;,\s]+/).filter(x=>x.includes("@")&&!/schoolsims\.com|school-sims\.com/.test(x));
+      rows.push({emails:ems,company:String(v("company")).trim(),contact:String(v("contact")).trim(),cemail:ems[0]||"",type:t,dir:String(v("dir")),date:actDate(v("date")),outcome:String(v("outcome")).trim(),replies:v("replies"),subject:String(v("subject")).trim(),body:String(v("body")).trim(),link:String(v("link")).trim()})})});
+  return rows}
+const AUTO_RE=/^(automatic reply|auto reply|out of office|undeliverable|delivery status)|reacted to your message|out of (the )?office|no longer (with|at|employed)|on leave until|limited access to email until/i;
+function actKind(r){const t=norm(r.type+" "+r.dir);if(/incoming|inbound|received/.test(t)&&(AUTO_RE.test(r.subject)||AUTO_RE.test(r.body.slice(0,300))))return"auto";if(/bounce/i.test(r.outcome))return"bounce";if(/call/.test(t))return"call";if(/meet/.test(t))return"meeting";if(/email|mail/.test(t))return/incoming|inbound|received|reply/.test(t)?"in":"out";if(/note/.test(t))return"note";if(r.outcome&&/answer|voicemail|connect|busy/i.test(r.outcome))return"call";return r.subject?"out":"other"}
+function actMatch(r){const by=S._actIdx;if(!by)return null;const n=norm(r.company);if(n&&by.name.has(n))return by.name.get(n);
+  for(const e of r.emails||[])if(by.email.has(e))return by.email.get(e);for(const e of r.emails||[]){const d=e.split("@")[1]||"";if(d&&by.dom.has(d))return by.dom.get(d)}
+  const cw=(r.subject.match(/^call with (.+)$/i)||[])[1]||r.contact;const cn=norm(cw);if(cn.includes(" ")&&by.person.has(cn))return by.person.get(cn);
+  if(n){for(const[k,v]of by.name)if(k.length>5&&(k.includes(n)||n.includes(k)))return v}return null}
+function actRollup(){const idx={name:new Map(),email:new Map(),dom:new Map(),person:new Map(),pEmail:new Map()};S.companies.forEach(c=>{idx.name.set(norm(c.name),c.key);if(c.dom)idx.dom.set(c.dom,c.key);c.cts.forEach(p=>{if(p.email)idx.email.set(p.email.toLowerCase(),c.key);const pn=norm(p.first+" "+p.last);if(pn.includes(" ")){idx.person.set(pn,c.key);if(p.email)idx.pEmail.set(pn,p.email.toLowerCase())}})});S._actIdx=idx;
+  const R={};let unmatched=0;(S.actRows||[]).forEach(r=>{const k=actMatch(r);if(!k){unmatched++;return}const c=S.companies.find(x=>x.key===k);
+    const a=R[k]||(R[k]={key:k,name:c?.name||r.company,out:0,in:0,replies:0,replyUnknown:0,calls:0,connects:0,vms:0,meetings:0,last:null,notes:[],links:[]});
+    const kd=actKind(r);a.cw=a.cw||{};const cn=norm((r.subject.match(/^call with (.+)$/i)||[])[1]||r.contact);const cids=kd==="call"?[idx.pEmail.get(cn)||(cn?"name:"+cn:"")].filter(Boolean):(r.emails||[]);
+    const conn=kd==="call"&&/connect|answered|spoke|conversation|completed/.test(norm(r.outcome))&&!/no answer|not connected|busy|wrong|failed|voicemail/.test(norm(r.outcome));
+    cids.forEach(id=>{const t=a.cw[id]||(a.cw[id]={att:0,prog:false});if(kd==="out"||(kd==="call"&&!conn))t.att++;if(kd==="in"||kd==="meeting"||conn||(kd==="out"&&num(r.replies)>0))t.prog=true});
+    if(kd==="out"){a.out++;const rv=String(r.replies).trim();if(/unavailable/i.test(rv)||rv==="")a.replyUnknown++;else a.replies+=num(rv)}
+    if(kd==="in")a.in++;if(kd==="meeting")a.meetings++;
+    if(kd==="call"){a.calls++;const o=norm(r.outcome);if(/voicemail/.test(o))a.vms++;else if(/connect|answered|spoke|conversation|completed/.test(o)&&!/no answer|not connected|busy|wrong|failed/.test(o))a.connects++}
+    if(kd==="in"||kd==="call"||kd==="note"){const fresh=r.body.split(/\bFrom:\s|\bOn .{5,80} wrote:|-{3,}\s*Original|\bSent from my/i)[0];const txt=[fresh,r.outcome].join(" ");const m=txt.match(NOT_INT);if(m&&!a.ni)a.ni=(r.contact?r.contact+": ":"")+"\u201c"+m[0]+"\u201d"}if(r.date&&(!a.last||r.date>a.last))a.last=r.date;if(r.body&&(kd==="call"||kd==="in"||kd==="note"))a.notes.push((r.date?fmtD(r.date)+": ":"")+r.body.split(/\bFrom:\s|\bOn .{5,80} wrote:|-{3,}\s*Original/i)[0].replace(/\s+/g," ").slice(0,220));if(r.link&&/^https?:/.test(r.link))a.links.push(r.link)});
+  const dates=(S.actRows||[]).map(r=>r.date).filter(Boolean).sort((x,y)=>x-y);const wk=dates.length?monOf(dates[Math.floor(dates.length/2)]):monOf(new Date(Date.now()-7*864e5));S.actWeek=wk;
+  Object.values(R).forEach(a=>{a.progress=a.in>0||a.replies>0||a.connects>0||a.meetings>0;a.attempts=a.out+a.calls-a.connects;a.status=a.ni?"Not interested":a.progress?[a.meetings?"Meeting":"",a.connects?"Connected call":"",a.in||a.replies?"Replied":""].filter(Boolean).join(", "):a.replyUnknown&&!a.calls?"Worked, reply tracking unavailable":"Worked, no response yet"});
+  Object.values(R).forEach(a=>{const h=S.actHist[a.key]||(S.actHist[a.key]={name:a.name,w:{}});h.w[wk]={att:a.attempts,prog:a.progress&&!a.ni,ni:a.ni||""};h.c=h.c||{};for(const[id,t]of Object.entries(a.cw||{})){(h.c[id]=h.c[id]||{})[wk]={att:t.att,prog:t.prog}}});
+  const cut=monOf(new Date(Date.now()-182*864e5));for(const h of Object.values(S.actHist)){for(const k of Object.keys(h.w))if(k<cut)delete h.w[k];for(const cw of Object.values(h.c||{}))for(const k of Object.keys(cw))if(k<cut)delete cw[k]}
+  store.set("actHist",S.actHist);
+  Object.values(R).forEach(a=>{const h=histFor(a.key);a.totalAtt=h.att;const c=S.companies.find(x=>x.key===a.key);const cs=c?contactStats(c):{done:0,total:0};a.cDone=cs.done;a.cTotal=cs.total;a.drop=rawDrop(a.key)});
+  S.act=R;S.actUnmatched=unmatched}
+const NOT_INT=/not interested|no interest|not a fit|not a priority|no budget|remove me|take me off|unsubscribe|stop (emailing|contacting|calling)|do not (call|contact|email)|don'?t (call|contact|email)|please stop|already (have|use|using) (a|an|another)|went with (another|a different)|chose (another|a different)|not (looking|in the market)|no thanks|no thank you|not at this time|(not something|doesn'?t|does not|won'?t) (that )?fit|not a good fit|decided (not|against)|going (in )?a different direction|not moving forward|pass on this/i;
+const maxAtt=()=>clamp(parseInt(S.settings.maxAtt)||4,2,12);
+function monOf(d){const x=new Date(d);x.setHours(12,0,0,0);x.setDate(x.getDate()-((x.getDay()+6)%7));return x.toISOString().slice(0,10)}
+function histFor(key){const h=S.actHist[key];if(!h)return null;const w=Object.values(h.w||{});return{att:w.reduce((t,x)=>t+(x.att||0),0),weeks:w.filter(x=>(x.att||0)>0).length,prog:w.some(x=>x.prog),ni:w.find(x=>x.ni)?.ni||""}}
+function contactWeeks(key,email){const cw=S.actHist[key]?.c?.[String(email||"").toLowerCase()];if(!cw)return{weeks:0,prog:false};const w=Object.values(cw);return{weeks:w.filter(x=>x.att>0).length,prog:w.some(x=>x.prog)}}
+function contactDoneRaw(key,p){if(S.settings.drop===false||!p.email)return false;const s=contactWeeks(key,p.email);return!s.prog&&s.weeks>=maxAtt()}
+function contactDone(key,p){return contactDoneRaw(key,p)&&!S.actKeepC[key+"|"+p.email.toLowerCase()]}
+function contactStats(c){const use=(c.use||[]).filter(p=>!p.dark);return{total:use.length,done:use.filter(p=>contactDone(c.key,p)).length}}
+function rawDrop(key){const h=histFor(key);if(!h||S.settings.drop===false)return"";if(h.ni)return"Said not interested";const c=S.companies.find(x=>x.key===key);if(!c)return"";const cs=contactStats(c);if(cs.total&&cs.done===cs.total)return`All ${cs.total} contact${cs.total>1?"s":""} worked ${maxAtt()}+ weeks, no response`;return""}
+function dropReason(c){return S.actKeep[c.key]?"":rawDrop(c.key)}
+function fmtD(d){return d?d.toLocaleDateString("en-US",{month:"short",day:"numeric"}):""}
+function renderAct(){const el=$("#actOut");if(!el)return;const A=Object.values(S.act||{});
+  $("#actPill").textContent=S.actFile?`${(S.actRows||[]).length} activities`:"Optional";$("#actPill").className="pill "+(S.actFile?"p-indep":"p-other");$("#dropAct").classList.toggle("loaded",!!S.actFile);
+  $("#actStat").innerHTML=S.actFile?`<b>${esc(S.actFile)}</b> · ${A.length} accounts matched${S.actUnmatched?` · ${S.actUnmatched} activities not matched to an account in the contact list`:""}`:"The .xlsx or .csv from Breeze.";
+  const HC=S.companies.filter(c=>S.actHist[c.key]);
+  const D=HC.map(c=>({c,why:rawDrop(c.key),a:S.act?.[c.key]})).filter(x=>x.why);
+  const DC=HC.filter(c=>!rawDrop(c.key)).flatMap(c=>(c.use||[]).filter(p=>!p.dark&&contactDoneRaw(c.key,p)).map(p=>({c,p,w:contactWeeks(c.key,p.email).weeks})));
+  const accRow=x=>{const k=!!S.actKeep[x.c.key];const a=x.a;const cs=contactStats(x.c);const note=a?(a.ni||a.notes[a.notes.length-1]||""):"";return `<div class="crow" style="cursor:default"><div style="min-width:0"><div><span class="cn">${esc(x.c.name)}</span> <span class="pill p-higher">${esc(x.why)}</span></div><div class="cmeta">${/interested/.test(x.why)?"":cs.total?`${cs.done} of ${cs.total} contacts done · `:""}${a?.last?`last activity ${fmtD(a.last)}`:""}${note?` · ${esc(note)}`:""}</div></div><div class="seg sm" role="group" aria-label="Keep or replace ${esc(x.c.name)}"><button data-keep="${esc(x.c.key)}" data-v="1" aria-pressed="${k}">Keep it</button><button data-keep="${esc(x.c.key)}" data-v="0" aria-pressed="${!k}">Replace with a new account</button></div></div>`};
+  const ctRow=x=>{const id=x.c.key+"|"+x.p.email.toLowerCase();const k=!!S.actKeepC[id];return `<div class="crow" style="cursor:default"><div style="min-width:0"><div><span class="cn">${esc(x.p.first)} ${esc(x.p.last)}</span> <span class="muted">· ${esc(x.p.title||"")} · ${esc(x.c.name)}</span></div><div class="cmeta"><span class="pill p-higher">${x.w} weeks worked, no response</span></div></div><div class="seg sm" role="group" aria-label="Keep or drop ${esc(x.p.first)}"><button data-keepc="${esc(id)}" data-v="1" aria-pressed="${k}">Keep calling</button><button data-keepc="${esc(id)}" data-v="0" aria-pressed="${!k}">Drop this contact</button></div></div>`};
+  const dec=D.length||DC.length?`<div class="card" style="margin-top:14px;border-color:var(--maroon)"><div class="shd"><span class="label">Decide</span><h3>What drops off after this import</h3></div><p class="muted" style="font-size:13.5px;max-width:78ch">Each contact gets ${maxAtt()} weeks of effort. A contact with no reply or connected call after that drops out of the call plan; the rest of the account keeps going. A whole account drops only when it says it isn't interested or every contact is done. Keep anything you still want to work.</p>
+    ${D.length?`<h3 style="margin-top:12px;font-size:15px">Accounts dropping off (${D.length})</h3><div class="clist">${D.map(accRow).join("")}</div>`:""}
+    ${DC.length?`<h3 style="margin-top:16px;font-size:15px">Contacts dropping off (${DC.length})</h3><div class="clist">${DC.map(ctRow).join("")}</div>`:""}</div>`:"";
+  const dO=$("#dropOut");if(dO)dO.innerHTML=dec||(S.actFile?`<div class="okbox" style="margin-top:12px">Nothing drops off after last week's import.</div>`:"");
+  if(!A.length){el.innerHTML="";return}const sum=k=>A.reduce((t,a)=>t+a[k],0);
+  A.sort((x,y)=>(!!y.drop-!!x.drop)||(y.progress-x.progress)||((y.last||0)-(x.last||0)));
+  el.innerHTML=`<div class="strip" style="margin-top:14px"><div><span class="n">${A.filter(a=>a.progress&&!a.drop).length}</span><span class="k">accounts with progress</span></div><div><span class="n" style="color:var(--maroon)">${D.filter(x=>!S.actKeep[x.c.key]).length}</span><span class="k">accounts dropping</span></div><div><span class="n" style="color:var(--maroon)">${DC.filter(x=>!S.actKeepC[x.c.key+"|"+x.p.email.toLowerCase()]).length}</span><span class="k">contacts dropping</span></div><div><span class="n">${sum("out")}</span><span class="k">emails sent</span></div><div><span class="n">${A.reduce((t,a)=>t+Math.max(a.in,a.replies),0)}</span><span class="k">replies</span></div><div><span class="n">${sum("calls")}</span><span class="k">calls (${sum("connects")} connected)</span></div>${sum("meetings")?`<div><span class="n">${sum("meetings")}</span><span class="k">meetings</span></div>`:""}</div>
+  <div class="tblwrap" style="margin-top:12px;max-height:50vh"><table><thead><tr><th>Account</th><th>Last week</th><th>Emails</th><th>Replies</th><th>Calls</th><th>Last activity</th><th>Latest note</th></tr></thead><tbody>${A.map(a=>`<tr><td><b>${esc(a.name)}</b>${a.links[0]?`<div><a href="${esc(a.links[0])}" target="_blank" rel="noopener" style="font-size:12px;color:var(--peri)">Open in HubSpot</a></div>`:""}</td><td>${a.drop?`<span class="pill ${S.actKeep[a.key]?"p-other":"p-higher"}">${S.actKeep[a.key]?"Kept: ":""}${esc(a.drop)}</span>`:a.progress?`<span class="pill p-indep">${esc(a.status)}</span>`:`<span class="muted">${esc(a.status)}</span>`}<div class="muted" style="font-size:12px">${a.cTotal?`${a.cDone} of ${a.cTotal} contacts done · `:""}${a.totalAtt} attempt${a.totalAtt===1?"":"s"}</div></td><td class="num">${a.out}</td><td class="num">${Math.max(a.in,a.replies)}${a.replyUnknown?` <span class="muted" title="Reply tracking unavailable">(${a.replyUnknown} n/a)</span>`:""}</td><td class="num">${a.calls}${a.calls?` <span class="muted">(${a.connects} conn.)</span>`:""}</td><td>${fmtD(a.last)}</td><td style="min-width:240px;font-size:13px">${esc(a.notes[a.notes.length-1]||"")}</td></tr>`).join("")}</tbody></table></div>`}
+async function loadAct(file){if(!file)return;if(typeof XLSX==="undefined"){toast("The spreadsheet reader didn't load. Refresh and try again.");return}
+  try{const rows=readAct(await file.arrayBuffer(),file.name);if(!rows.length){toast("Couldn't find activity rows in that file. Send it to Brian.");return}
+    S.actRows=rows;S.actFile=file.name;actRollup();ingest();build();renderAct();toast(`Loaded ${rows.length} activities from last week`)}
+  catch(e){toast("Couldn't read that file. Save it as .xlsx or .csv and try again.")}}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-keepc]");if(!b)return;const k=b.dataset.keepc;if(b.dataset.v==="1")S.actKeepC[k]=true;else delete S.actKeepC[k];store.set("actKeepC",S.actKeepC);ingest();build();renderAct();toast(b.dataset.v==="1"?"Contact stays in the plan":"Contact dropped")});
+document.addEventListener("click",e=>{const b=e.target.closest("[data-keep]");if(!b)return;const k=b.dataset.keep;if(b.dataset.v==="1")S.actKeep[k]=true;else delete S.actKeep[k];store.set("actKeep",S.actKeep);ingest();build();renderAct();toast(b.dataset.v==="1"?"Kept in the plan":"Replaced with the next account")});
+function setupActDrop(){const drop=$("#dropAct"),inp=$("#fileAct");if(!drop)return;inp.onchange=()=>{loadAct(inp.files[0]);inp.value=""};
+  ["dragenter","dragover"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add("over")}));["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove("over")}));
+  drop.addEventListener("drop",e=>loadAct(e.dataTransfer.files[0]))}
 
 /* ---------- uploads ---------- */
 function setupDrop(){const drop=$("#dropCt"),inp=$("#fileCt");
@@ -715,7 +813,7 @@ function setupDrop(){const drop=$("#dropCt"),inp=$("#fileCt");
 function loadCsv(rows,fields,name){const cols=mapCols(fields,MAP_CT);
   if(!cols.email||!cols.company){toast("This doesn't look like the HubSpot contact list. It needs Email and Company name columns.");updateDrops();return}
   if(S.sample){S.sample=false;S.mined=store.get("mined",{});S.excluded=store.get("excluded",{})}
-  S.contacts=project(rows,cols).filter(p=>p.email||p.first);S.ctFile=name;S.ctCols=cols;ingest();updateDrops();toast(`Loaded ${S.contacts.length.toLocaleString()} contacts at ${S.companies.length.toLocaleString()} companies`)}
+  S.contacts=project(rows,cols).filter(p=>p.email||p.first);S.ctFile=name;S.ctCols=cols;ingest();if(S.actRows){actRollup();ingest();renderAct()}updateDrops();toast(`Loaded ${S.contacts.length.toLocaleString()} contacts at ${S.companies.length.toLocaleString()} companies`)}
 function updateDrops(){const file=S.ctFile,cols=S.ctCols;const miss=NEED_COLS.filter(k=>!cols[k]);
   $("#ctPill").textContent=file?`${S.contacts.length.toLocaleString()} contacts`:S.sample?"Example data":"Needed";$("#ctPill").className="pill "+(file?"p-indep":S.sample?"mined":"p-other");$("#dropCt").classList.toggle("loaded",!!file);
   $("#ctStat").innerHTML=file?`<b>${esc(file)}</b> · ${S.companies.length.toLocaleString()} companies${miss.length?`<br><span style="color:var(--warn)">Missing columns: ${esc(miss.map(k=>MAP_CT[k][0].replace(/\b\w/g,m=>m.toUpperCase())).join(", "))}. Add them to the list view in HubSpot and export again for better results.</span>`:""}`:"Drag the HubSpot export here, or click the button.";
@@ -804,6 +902,7 @@ function buildWorkbook(){const P=S.plan,st=S.settings,tz=st.tz;const wb=XLSX.uti
   const g=[["Company","Scheduled","Segment","Owner","Main phone","Website","Usable contacts","Job function to find","Titles to look for","Search link"]];
   P.eligible.filter(c=>c.gaps.length||c.use.length<st.min).sort((a,b)=>(dayOf.has(b.key)-dayOf.has(a.key))||(b.score-a.score)).forEach(c=>{(c.gaps.length?c.gaps:[{g:"More contacts",titles:TARGETS[c.seg].slice(0,2)}]).forEach(n=>g.push([c.name,dayOf.get(c.key)||"",SEG[c.seg],c.owner||"Unassigned",c.phone||"",c.dom||"",c.use.filter(p=>!p.dark).length,n.g,n.titles.join("; "),`https://www.google.com/search?q=${encodeURIComponent(`${c.dom?`site:${c.dom} `:`"${c.name}" `}"${n.titles[0].split(/[,(]/)[0].trim()}"`)}`]))});
   XLSX.utils.book_append_sheet(wb,sheet(g,[34,11,16,20,16,24,10,24,55,50]),"Contacts to Find");
+  const LA=Object.values(S.act||{});if(LA.length){const la=[["Account","Last week","Emails sent","Replies","Reply tracking unavailable","Calls","Connected","Voicemails","Meetings","Last activity","Latest note","Link"]];LA.sort((x,y)=>(y.progress-x.progress)||((y.last||0)-(x.last||0))).forEach(a=>la.push([a.name,a.drop?(S.actKeep[a.key]?"Kept: ":"Replaced: ")+a.drop:a.status,a.out,Math.max(a.in,a.replies),a.replyUnknown,a.calls,a.connects,a.vms,a.meetings,a.last?a.last.toISOString().slice(0,10):"",a.notes[a.notes.length-1]||"",a.links[0]||""]));XLSX.utils.book_append_sheet(wb,sheet(la,[32,30,10,9,14,7,10,10,9,12,70,40]),"Last Week Activity")}
   return wb}
 function exportXlsx(){if(typeof XLSX==="undefined"){toast("The spreadsheet library didn't load. Refresh and try again.");return}if(!S.plan?.picks.length){toast("Upload companies first");return}
   const wb=buildWorkbook();const out=XLSX.write(wb,{bookType:"xlsx",type:"array"});saveFile(`SchoolSims-outbound-week-of-${S.settings.week}.xlsx`,new Uint8Array(out),"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")}
@@ -829,7 +928,7 @@ function loadSample(){let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/21
 
 /* ---------- init ---------- */
 {const st=S.settings;if((st.cfgv||0)<2){st.min=Math.max(3,+st.min||3);st.max=5;if(st.perOverride>5)st.perOverride=5;if(st.acts==null)st.acts=10;st.cfgv=2;store.set("settings",st)}}
-bindSettings();setupDrop();
+bindSettings();setupDrop();setupActDrop();
 if(typeof Papa==="undefined"){document.querySelector("#step2").insertAdjacentHTML("afterbegin",`<div class="banner">The CSV reader didn't load. Check your connection and refresh.</div>`)}
 S.mined={};S.excluded={};
 paintMonths();loadSample();goStep(1);detectEngine();
