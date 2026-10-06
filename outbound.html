@@ -255,7 +255,7 @@ tr.ex td:first-child,tr.ex td:last-child{opacity:1}
     <ol>
       <li><b>Contact list.</b> Export the SchoolSims contact list from HubSpot and upload it.</li>
       <li><b>Last week's updates.</b> Run the Breeze prompt in HubSpot and upload the spreadsheet it gives you.</li>
-      <li><b>Review accounts.</b> See what dropped off and why, and uncheck anything you shouldn't call.</li>
+      <li><b>Review accounts.</b> See this week's suggested accounts, skip and replace any you shouldn't call, and see what dropped off and why.</li>
       <li><b>Weekly plan.</b> Follow the day's schedule, tap a contact for scripts, and download the .xlsx.</li>
       <li><b>Pipeline target</b> (once a month). Update closed won and open pipeline; it sets companies per day, up to 5.</li>
     </ol>
@@ -319,11 +319,14 @@ tr.ex td:first-child,tr.ex td:last-child{opacity:1}
 
   <section id="step3" class="stepview" hidden>
     <div class="card">
-      <div class="shd"><span class="label">Step 3</span><h2>Review accounts: exclude any you shouldn't call</h2></div>
-      <div id="dropOut"></div>
+      <div class="shd"><span class="label">Step 3</span><h2>Review this week's accounts</h2></div>
       <p class="muted" id="revSummary" style="margin-top:4px"></p>
+      <div id="weekPicks"></div>
+      <div id="dropOut"></div>
+      <div id="skipOut"></div>
+      <details style="margin-top:18px"><summary style="cursor:pointer;font-weight:600">All uploaded accounts, including ones left out by filters</summary>
       <div class="revtools"><input id="revQ" type="search" placeholder="Search accounts" aria-label="Search accounts"><div class="seg sm" role="group" id="revF"><button data-rf="all" aria-pressed="true">All</button><button data-rf="plan" aria-pressed="false">In this week</button><button data-rf="ex" aria-pressed="false">Excluded</button></div></div>
-      <div id="revTable"></div>
+      <div id="revTable"></div></details>
     </div>
     <div class="next"><button class="btn" data-go="2">Back</button><button class="btn primary" data-go="4">Next: build the weekly plan</button></div>
   </section>
@@ -376,7 +379,7 @@ const norm=s=>String(s??"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const num=v=>{const n=parseFloat(String(v??"").replace(/[^0-9.\-]/g,""));return isFinite(n)?n:0};
 function parseDate(v){if(!v)return null;const s=String(v).trim();if(!s)return null;if(/^\d{10,13}$/.test(s)){const n=+s;return new Date(s.length===13?n:n*1000)}const d=new Date(s.replace(/^(\d{4}-\d{2}-\d{2}) /,"$1T"));return isNaN(d)?null:d}
-function daysSince(d){return d?Math.floor((Date.now()-d.getTime())/864e5):null}
+function daysSince(d){return d?Math.max(0,Math.floor((Date.now()-d.getTime())/864e5)):null}
 const store={get(k,f){try{const v=localStorage.getItem("ssop_"+k);return v?JSON.parse(v):f}catch{return f}},set(k,v){try{localStorage.setItem("ssop_"+k,JSON.stringify(v))}catch{}}};
 function persist(){if(!S.sample){store.set("excluded",S.excluded);store.set("mined",S.mined)}}
 function toast(msg){const t=document.createElement("div");t.className="toast";t.textContent=msg;document.body.append(t);setTimeout(()=>t.remove(),2200)}
@@ -572,7 +575,11 @@ function paintMonths(){const st=S.settings;$("#pLow").innerHTML=MON.map((m,i)=>`
 
 /* ---------- step 3: review ---------- */
 const REASONS=["Open deal or renewal","Recently contacted","Not a fit","Under contract with a competitor","Asked not to be contacted","Bad or duplicate record","Swapped out of plan","Other"];
-function renderReview(){const P=S.plan;if(!P)return;const dayOf=new Map();P.days.forEach(d=>d.accts.forEach(a=>dayOf.set(a.c.key,d.i)));
+function renderPicks(){const P=S.plan;if(!P)return;const el=$("#weekPicks");if(!el)return;
+  el.innerHTML=`<h3 style="margin-top:14px">Suggested accounts this week (${P.picks.length})</h3><p class="muted" style="font-size:13.5px;margin:2px 0 8px">Skip any account you shouldn't call. The next best account takes its place.</p>`+(P.days.some(d=>d.accts.length)?P.days.filter(d=>d.accts.length).map(d=>`<div style="margin-top:10px"><span class="label">${DOWL[d.i]} · ${esc(d.date)}</span><div class="clist">${d.accts.map(a=>{const c=a.c;return `<div class="crow" style="cursor:default"><div style="min-width:0"><div><span class="cn">${esc(c.name)}</span> ${segPill(c.seg)} <span class="muted" style="font-size:13px">score ${c.score} · ${a.people.length} contact${a.people.length===1?"":"s"}${a.slots.length?` + ${a.slots.length} to find`:""}</span></div><div class="cmeta">${esc([...new Set([c.city,c.st].filter(Boolean))].join(", "))}${c.why.length?" · "+esc(c.why.slice(0,4).join(" · ")):""}</div></div><button class="btn sm" data-skip="${esc(c.key)}">Skip and replace</button></div>`}).join("")}</div></div>`).join(""):`<div class="empty">No accounts to schedule. Upload the contact list in Step 1.</div>`);
+  const sk=S.companies.filter(c=>S.excluded[c.key]);const so=$("#skipOut");
+  so.innerHTML=sk.length?`<div class="card" style="margin-top:14px"><div class="shd"><span class="label">Skipped by you</span><h3>${sk.length} account${sk.length>1?"s":""}</h3></div><div class="clist">${sk.map(c=>`<div class="crow" style="cursor:default"><div style="min-width:0"><span class="cn">${esc(c.name)}</span> <span class="muted" style="font-size:13px">${esc(S.excluded[c.key])}</span></div><div style="display:flex;gap:6px;align-items:center"><select data-reason="${esc(c.key)}" aria-label="Reason">${REASONS.map(r=>`<option ${r===S.excluded[c.key]?"selected":""}>${r}</option>`).join("")}</select><button class="btn sm" data-unskip="${esc(c.key)}">Undo</button></div></div>`).join("")}</div></div>`:""}
+function renderReview(){const P=S.plan;if(!P)return;renderPicks();const dayOf=new Map();P.days.forEach(d=>d.accts.forEach(a=>dayOf.set(a.c.key,d.i)));
   const all=[...S.companies].sort((a,b)=>b.score-a.score);const q=norm(S.q);let rows=all.filter(c=>!q||norm([c.name,c.city,c.st,c.owner,SEG[c.seg]].join(" ")).includes(q));
   if(S.rf==="plan")rows=rows.filter(c=>dayOf.has(c.key));if(S.rf==="ex")rows=rows.filter(c=>S.excluded[c.key]||autoReason(c));
   const exN=Object.keys(S.excluded).filter(k=>S.companies.some(c=>c.key===k)).length,autoN=all.filter(c=>autoReason(c)).length;
@@ -713,7 +720,8 @@ document.addEventListener("click",e=>{const t=e.target.closest("button,[data-ope
   if(t.dataset.gs){S.gapScope=t.dataset.gs;render();return}
   if(t.dataset.copytext){copyText($("#"+t.dataset.copytext).textContent,t);return}
   if(t.dataset.copydoc){copyText($("#doc-"+t.dataset.copydoc).textContent,t);return}
-  if(t.dataset.skip){S.excluded[t.dataset.skip]="Swapped out of plan";persist();build();toast("Swapped in the next account. Undo in Step 3.");return}
+  if(t.dataset.skip){S.excluded[t.dataset.skip]="Swapped out of plan";persist();build();toast("Skipped. The next account took its place.");return}
+  if(t.dataset.unskip){delete S.excluded[t.dataset.unskip];persist();build();toast("Back in the running");return}
   if(t.dataset.go){goStep(+t.dataset.go);return}
   if(t.dataset.rf){S.rf=t.dataset.rf;document.querySelectorAll("#revF button").forEach(b=>b.setAttribute("aria-pressed",b===t));renderReview();return}
   if(t.dataset.mon){const m=+t.dataset.mon,st=S.settings;st.low=st.low.includes(m)?st.low.filter(x=>x!==m):[...st.low,m];store.set("settings",st);paintMonths();build();return}
@@ -785,7 +793,7 @@ function renderAct(){const el=$("#actOut");if(!el)return;const A=Object.values(S
   const DC=HC.filter(c=>!rawDrop(c.key)).flatMap(c=>(c.use||[]).filter(p=>!p.dark&&contactDoneRaw(c.key,p)).map(p=>({c,p,w:contactWeeks(c.key,p.email).weeks})));
   const accRow=x=>{const k=!!S.actKeep[x.c.key];const a=x.a;const cs=contactStats(x.c);const note=a?(a.ni||a.notes[a.notes.length-1]||""):"";return `<div class="crow" style="cursor:default"><div style="min-width:0"><div><span class="cn">${esc(x.c.name)}</span> <span class="pill p-higher">${esc(x.why)}</span></div><div class="cmeta">${/interested/.test(x.why)?"":cs.total?`${cs.done} of ${cs.total} contacts done · `:""}${a?.last?`last activity ${fmtD(a.last)}`:""}${note?` · ${esc(note)}`:""}</div></div><div class="seg sm" role="group" aria-label="Keep or replace ${esc(x.c.name)}"><button data-keep="${esc(x.c.key)}" data-v="1" aria-pressed="${k}">Keep it</button><button data-keep="${esc(x.c.key)}" data-v="0" aria-pressed="${!k}">Replace with a new account</button></div></div>`};
   const ctRow=x=>{const id=x.c.key+"|"+x.p.email.toLowerCase();const k=!!S.actKeepC[id];return `<div class="crow" style="cursor:default"><div style="min-width:0"><div><span class="cn">${esc(x.p.first)} ${esc(x.p.last)}</span> <span class="muted">· ${esc(x.p.title||"")} · ${esc(x.c.name)}</span></div><div class="cmeta"><span class="pill p-higher">${x.w} weeks worked, no response</span></div></div><div class="seg sm" role="group" aria-label="Keep or drop ${esc(x.p.first)}"><button data-keepc="${esc(id)}" data-v="1" aria-pressed="${k}">Keep calling</button><button data-keepc="${esc(id)}" data-v="0" aria-pressed="${!k}">Drop this contact</button></div></div>`};
-  const dec=D.length||DC.length?`<div class="card" style="margin-top:14px;border-color:var(--maroon)"><div class="shd"><span class="label">Decide</span><h3>What drops off after this import</h3></div><p class="muted" style="font-size:13.5px;max-width:78ch">Each contact gets ${maxAtt()} weeks of effort. A contact with no reply or connected call after that drops out of the call plan; the rest of the account keeps going. A whole account drops only when it says it isn't interested or every contact is done. Keep anything you still want to work.</p>
+  const dec=D.length||DC.length?`<div class="card" style="margin-top:14px;border-color:var(--maroon)"><div class="shd"><span class="label">Decide</span><h3>Dropped off after last week's updates, and why</h3></div><p class="muted" style="font-size:13.5px;max-width:78ch">Each contact gets ${maxAtt()} weeks of effort. A contact with no reply or connected call after that drops out of the call plan; the rest of the account keeps going. A whole account drops only when it says it isn't interested or every contact is done. Keep anything you still want to work.</p>
     ${D.length?`<h3 style="margin-top:12px;font-size:15px">Accounts dropping off (${D.length})</h3><div class="clist">${D.map(accRow).join("")}</div>`:""}
     ${DC.length?`<h3 style="margin-top:16px;font-size:15px">Contacts dropping off (${DC.length})</h3><div class="clist">${DC.map(ctRow).join("")}</div>`:""}</div>`:"";
   const dO=$("#dropOut");if(dO)dO.innerHTML=dec||(S.actFile?`<div class="okbox" style="margin-top:12px">Nothing drops off after last week's import.</div>`:"");
